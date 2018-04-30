@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.novel.common.mapper.TbNetMapper" >
+  <resultMap id="BaseResultMap" type="com.novel.common.pojo.TbNet" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="netname" property="netname" jdbcType="VARCHAR" />
+    <result column="baseurl" property="baseurl" jdbcType="VARCHAR" />
+    <result column="fullurl" property="fullurl" jdbcType="VARCHAR" />
+    <result column="charset" property="charset" jdbcType="VARCHAR" />
+    <result column="novelurl" property="novelurl" jdbcType="VARCHAR" />
+    <result column="chapterurl" property="chapterurl" jdbcType="VARCHAR" />
+    <result column="chapterinfourl" property="chapterinfourl" jdbcType="VARCHAR" />
+    <result column="imageurl" property="imageurl" jdbcType="VARCHAR" />
+    <result column="addtime" property="addtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.novel.common.pojo.TbNet" extends="BaseResultMap" >
+    <result column="paramdata" property="paramdata" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, netname, baseurl, fullurl, charset, novelurl, chapterurl, chapterinfourl, imageurl, 
+    addtime
+  </sql>
+  <sql id="Blob_Column_List" >
+    paramdata
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.novel.common.pojo.TbNetExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tb_net
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.novel.common.pojo.TbNetExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_net
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  
+   <select id="selectList" resultMap="BaseResultMap"   >
+    select
+    <include refid="Base_Column_List" />
+    from tb_net
+    
+  </select>
+  
+  
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tb_net
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tb_net
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.novel.common.pojo.TbNetExample" >
+    delete from tb_net
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.novel.common.pojo.TbNet" >
+    insert into tb_net (id, netname, baseurl, 
+      fullurl, charset, novelurl, 
+      chapterurl, chapterinfourl, imageurl, 
+      addtime, paramdata)
+    values (#{id,jdbcType=BIGINT}, #{netname,jdbcType=VARCHAR}, #{baseurl,jdbcType=VARCHAR}, 
+      #{fullurl,jdbcType=VARCHAR}, #{charset,jdbcType=VARCHAR}, #{novelurl,jdbcType=VARCHAR}, 
+      #{chapterurl,jdbcType=VARCHAR}, #{chapterinfourl,jdbcType=VARCHAR}, #{imageurl,jdbcType=VARCHAR}, 
+      #{addtime,jdbcType=TIMESTAMP}, #{paramdata,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.novel.common.pojo.TbNet" >
+    insert into tb_net
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="netname != null" >
+        netname,
+      </if>
+      <if test="baseurl != null" >
+        baseurl,
+      </if>
+      <if test="fullurl != null" >
+        fullurl,
+      </if>
+      <if test="charset != null" >
+        charset,
+      </if>
+      <if test="novelurl != null" >
+        novelurl,
+      </if>
+      <if test="chapterurl != null" >
+        chapterurl,
+      </if>
+      <if test="chapterinfourl != null" >
+        chapterinfourl,
+      </if>
+      <if test="imageurl != null" >
+        imageurl,
+      </if>
+      <if test="addtime != null" >
+        addtime,
+      </if>
+      <if test="paramdata != null" >
+        paramdata,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="netname != null" >
+        #{netname,jdbcType=VARCHAR},
+      </if>
+      <if test="baseurl != null" >
+        #{baseurl,jdbcType=VARCHAR},
+      </if>
+      <if test="fullurl != null" >
+        #{fullurl,jdbcType=VARCHAR},
+      </if>
+      <if test="charset != null" >
+        #{charset,jdbcType=VARCHAR},
+      </if>
+      <if test="novelurl != null" >
+        #{novelurl,jdbcType=VARCHAR},
+      </if>
+      <if test="chapterurl != null" >
+        #{chapterurl,jdbcType=VARCHAR},
+      </if>
+      <if test="chapterinfourl != null" >
+        #{chapterinfourl,jdbcType=VARCHAR},
+      </if>
+      <if test="imageurl != null" >
+        #{imageurl,jdbcType=VARCHAR},
+      </if>
+      <if test="addtime != null" >
+        #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="paramdata != null" >
+        #{paramdata,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.novel.common.pojo.TbNetExample" resultType="java.lang.Integer" >
+    select count(*) from tb_net
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tb_net
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.netname != null" >
+        netname = #{record.netname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.baseurl != null" >
+        baseurl = #{record.baseurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fullurl != null" >
+        fullurl = #{record.fullurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.charset != null" >
+        charset = #{record.charset,jdbcType=VARCHAR},
+      </if>
+      <if test="record.novelurl != null" >
+        novelurl = #{record.novelurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chapterurl != null" >
+        chapterurl = #{record.chapterurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chapterinfourl != null" >
+        chapterinfourl = #{record.chapterinfourl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.imageurl != null" >
+        imageurl = #{record.imageurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addtime != null" >
+        addtime = #{record.addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.paramdata != null" >
+        paramdata = #{record.paramdata,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update tb_net
+    set id = #{record.id,jdbcType=BIGINT},
+      netname = #{record.netname,jdbcType=VARCHAR},
+      baseurl = #{record.baseurl,jdbcType=VARCHAR},
+      fullurl = #{record.fullurl,jdbcType=VARCHAR},
+      charset = #{record.charset,jdbcType=VARCHAR},
+      novelurl = #{record.novelurl,jdbcType=VARCHAR},
+      chapterurl = #{record.chapterurl,jdbcType=VARCHAR},
+      chapterinfourl = #{record.chapterinfourl,jdbcType=VARCHAR},
+      imageurl = #{record.imageurl,jdbcType=VARCHAR},
+      addtime = #{record.addtime,jdbcType=TIMESTAMP},
+      paramdata = #{record.paramdata,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tb_net
+    set id = #{record.id,jdbcType=BIGINT},
+      netname = #{record.netname,jdbcType=VARCHAR},
+      baseurl = #{record.baseurl,jdbcType=VARCHAR},
+      fullurl = #{record.fullurl,jdbcType=VARCHAR},
+      charset = #{record.charset,jdbcType=VARCHAR},
+      novelurl = #{record.novelurl,jdbcType=VARCHAR},
+      chapterurl = #{record.chapterurl,jdbcType=VARCHAR},
+      chapterinfourl = #{record.chapterinfourl,jdbcType=VARCHAR},
+      imageurl = #{record.imageurl,jdbcType=VARCHAR},
+      addtime = #{record.addtime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.novel.common.pojo.TbNet" >
+    update tb_net
+    <set >
+      <if test="netname != null" >
+        netname = #{netname,jdbcType=VARCHAR},
+      </if>
+      <if test="baseurl != null" >
+        baseurl = #{baseurl,jdbcType=VARCHAR},
+      </if>
+      <if test="fullurl != null" >
+        fullurl = #{fullurl,jdbcType=VARCHAR},
+      </if>
+      <if test="charset != null" >
+        charset = #{charset,jdbcType=VARCHAR},
+      </if>
+      <if test="novelurl != null" >
+        novelurl = #{novelurl,jdbcType=VARCHAR},
+      </if>
+      <if test="chapterurl != null" >
+        chapterurl = #{chapterurl,jdbcType=VARCHAR},
+      </if>
+      <if test="chapterinfourl != null" >
+        chapterinfourl = #{chapterinfourl,jdbcType=VARCHAR},
+      </if>
+      <if test="imageurl != null" >
+        imageurl = #{imageurl,jdbcType=VARCHAR},
+      </if>
+      <if test="addtime != null" >
+        addtime = #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="paramdata != null" >
+        paramdata = #{paramdata,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.novel.common.pojo.TbNet" >
+    update tb_net
+    set netname = #{netname,jdbcType=VARCHAR},
+      baseurl = #{baseurl,jdbcType=VARCHAR},
+      fullurl = #{fullurl,jdbcType=VARCHAR},
+      charset = #{charset,jdbcType=VARCHAR},
+      novelurl = #{novelurl,jdbcType=VARCHAR},
+      chapterurl = #{chapterurl,jdbcType=VARCHAR},
+      chapterinfourl = #{chapterinfourl,jdbcType=VARCHAR},
+      imageurl = #{imageurl,jdbcType=VARCHAR},
+      addtime = #{addtime,jdbcType=TIMESTAMP},
+      paramdata = #{paramdata,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.novel.common.pojo.TbNet" >
+    update tb_net
+    set netname = #{netname,jdbcType=VARCHAR},
+      baseurl = #{baseurl,jdbcType=VARCHAR},
+      fullurl = #{fullurl,jdbcType=VARCHAR},
+      charset = #{charset,jdbcType=VARCHAR},
+      novelurl = #{novelurl,jdbcType=VARCHAR},
+      chapterurl = #{chapterurl,jdbcType=VARCHAR},
+      chapterinfourl = #{chapterinfourl,jdbcType=VARCHAR},
+      imageurl = #{imageurl,jdbcType=VARCHAR},
+      addtime = #{addtime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

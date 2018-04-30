@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://dozer.sourceforge.net
+          http://dozer.sourceforge.net/schema/beanmapping.xsd">
+  <configuration>
+    <!-- 总是双向转换的 -->
+   <!--  <custom-converters>
+    <converter type="com.novel.manage.converter.NovelConverter" >
+        <class-a>com.novel.common.pojo.TbChapter</class-a>
+        <class-b>com.novel.spider.entitys.SpiderChapter</class-b>
+      </converter>
+    </custom-converters>  -->    
+  </configuration>
+  
+ <!--  单向映射(One-Way Mapping) type="one-way" 开启 <mapping type="one-way">  -->  
+  <mapping > 
+  <class-a>com.novel.common.pojo.TbNovel</class-a>
+  <class-b>com.novel.spider.entitys.SpiderNovel</class-b>   
+    <!-- 排除属性  裁剪字符串开关trim-strings -->
+	<field-exclude>
+      <a>imgpath</a>
+      <b>imgpath</b>
+    </field-exclude>
+</mapping>
+</mappings>

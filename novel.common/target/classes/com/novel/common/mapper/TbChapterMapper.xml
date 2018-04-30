@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.novel.common.mapper.TbChapterMapper" >
+  <resultMap id="BaseResultMap" type="com.novel.common.pojo.TbChapter" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <id column="novelid" property="novelid" jdbcType="BIGINT" />
+    <id column="netid" property="netid" jdbcType="BIGINT" />
+    <result column="tittle" property="tittle" jdbcType="VARCHAR" />
+    <result column="chapterpath" property="chapterpath" jdbcType="VARCHAR" />
+    <result column="previd" property="previd" jdbcType="BIGINT" />
+    <result column="nextid" property="nextid" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, novelid, netid, tittle, chapterpath, previd, nextid
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.novel.common.pojo.TbChapterExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_chapter
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.novel.common.pojo.TbChapterKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_chapter
+    where id = #{id,jdbcType=BIGINT}
+      and novelid = #{novelid,jdbcType=BIGINT}
+      and netid = #{netid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.novel.common.pojo.TbChapterKey" >
+    delete from tb_chapter
+    where id = #{id,jdbcType=BIGINT}
+      and novelid = #{novelid,jdbcType=BIGINT}
+      and netid = #{netid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.novel.common.pojo.TbChapterExample" >
+    delete from tb_chapter
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.novel.common.pojo.TbChapter" >
+    insert into tb_chapter (id, novelid, netid, 
+      tittle, chapterpath, previd, 
+      nextid)
+    values (#{id,jdbcType=BIGINT}, #{novelid,jdbcType=BIGINT}, #{netid,jdbcType=BIGINT}, 
+      #{tittle,jdbcType=VARCHAR}, #{chapterpath,jdbcType=VARCHAR}, #{previd,jdbcType=BIGINT}, 
+      #{nextid,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.novel.common.pojo.TbChapter" >
+    insert into tb_chapter
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="novelid != null" >
+        novelid,
+      </if>
+      <if test="netid != null" >
+        netid,
+      </if>
+      <if test="tittle != null" >
+        tittle,
+      </if>
+      <if test="chapterpath != null" >
+        chapterpath,
+      </if>
+      <if test="previd != null" >
+        previd,
+      </if>
+      <if test="nextid != null" >
+        nextid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="novelid != null" >
+        #{novelid,jdbcType=BIGINT},
+      </if>
+      <if test="netid != null" >
+        #{netid,jdbcType=BIGINT},
+      </if>
+      <if test="tittle != null" >
+        #{tittle,jdbcType=VARCHAR},
+      </if>
+      <if test="chapterpath != null" >
+        #{chapterpath,jdbcType=VARCHAR},
+      </if>
+      <if test="previd != null" >
+        #{previd,jdbcType=BIGINT},
+      </if>
+      <if test="nextid != null" >
+        #{nextid,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.novel.common.pojo.TbChapterExample" resultType="java.lang.Integer" >
+    select count(*) from tb_chapter
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tb_chapter
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.novelid != null" >
+        novelid = #{record.novelid,jdbcType=BIGINT},
+      </if>
+      <if test="record.netid != null" >
+        netid = #{record.netid,jdbcType=BIGINT},
+      </if>
+      <if test="record.tittle != null" >
+        tittle = #{record.tittle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chapterpath != null" >
+        chapterpath = #{record.chapterpath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.previd != null" >
+        previd = #{record.previd,jdbcType=BIGINT},
+      </if>
+      <if test="record.nextid != null" >
+        nextid = #{record.nextid,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tb_chapter
+    set id = #{record.id,jdbcType=BIGINT},
+      novelid = #{record.novelid,jdbcType=BIGINT},
+      netid = #{record.netid,jdbcType=BIGINT},
+      tittle = #{record.tittle,jdbcType=VARCHAR},
+      chapterpath = #{record.chapterpath,jdbcType=VARCHAR},
+      previd = #{record.previd,jdbcType=BIGINT},
+      nextid = #{record.nextid,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.novel.common.pojo.TbChapter" >
+    update tb_chapter
+    <set >
+      <if test="tittle != null" >
+        tittle = #{tittle,jdbcType=VARCHAR},
+      </if>
+      <if test="chapterpath != null" >
+        chapterpath = #{chapterpath,jdbcType=VARCHAR},
+      </if>
+      <if test="previd != null" >
+        previd = #{previd,jdbcType=BIGINT},
+      </if>
+      <if test="nextid != null" >
+        nextid = #{nextid,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+      and novelid = #{novelid,jdbcType=BIGINT}
+      and netid = #{netid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.novel.common.pojo.TbChapter" >
+    update tb_chapter
+    set tittle = #{tittle,jdbcType=VARCHAR},
+      chapterpath = #{chapterpath,jdbcType=VARCHAR},
+      previd = #{previd,jdbcType=BIGINT},
+      nextid = #{nextid,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+      and novelid = #{novelid,jdbcType=BIGINT}
+      and netid = #{netid,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,440 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.novel.common.mapper.TbNovelMapper" >
+  <resultMap id="BaseResultMap" type="com.novel.common.pojo.TbNovel" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <id column="netid" property="netid" jdbcType="BIGINT" />
+    <result column="tittle" property="tittle" jdbcType="VARCHAR" />
+    <result column="author" property="author" jdbcType="VARCHAR" />
+    <result column="tid" property="tid" jdbcType="BIGINT" />
+    <result column="tname" property="tname" jdbcType="VARCHAR" />
+    <result column="introduction" property="introduction" jdbcType="VARCHAR" />
+    <result column="imgpath" property="imgpath" jdbcType="VARCHAR" />
+    <result column="latestchaptername" property="latestchaptername" jdbcType="VARCHAR" />
+    <result column="latestchapterid" property="latestchapterid" jdbcType="BIGINT" />
+    <result column="addtime" property="addtime" jdbcType="TIMESTAMP" />
+    <result column="updatetime" property="updatetime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="vaild" property="vaild" jdbcType="TINYINT" />
+    <result column="ishaschapter" property="ishaschapter" jdbcType="TINYINT" />
+    <result column="clicknum" property="clicknum" jdbcType="INTEGER" />
+    <result column="downnum" property="downnum" jdbcType="INTEGER" />
+    <result column="chapteroldid" property="chapteroldid" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, netid, tittle, author, tid, tname, introduction, imgpath, latestchaptername, 
+    latestchapterid, addtime, updatetime, status, vaild, ishaschapter, clicknum, downnum, 
+    chapteroldid
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.novel.common.pojo.TbNovelExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_novel
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.novel.common.pojo.TbNovelKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_novel
+    where id = #{id,jdbcType=BIGINT}
+      and netid = #{netid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.novel.common.pojo.TbNovelKey" >
+    delete from tb_novel
+    where id = #{id,jdbcType=BIGINT}
+      and netid = #{netid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.novel.common.pojo.TbNovelExample" >
+    delete from tb_novel
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.novel.common.pojo.TbNovel" >
+    insert into tb_novel (id, netid, tittle, 
+      author, tid, tname, 
+      introduction, imgpath, latestchaptername, 
+      latestchapterid, addtime, updatetime, 
+      status, vaild, ishaschapter, 
+      clicknum, downnum, chapteroldid
+      )
+    values (#{id,jdbcType=BIGINT}, #{netid,jdbcType=BIGINT}, #{tittle,jdbcType=VARCHAR}, 
+      #{author,jdbcType=VARCHAR}, #{tid,jdbcType=BIGINT}, #{tname,jdbcType=VARCHAR}, 
+      #{introduction,jdbcType=VARCHAR}, #{imgpath,jdbcType=VARCHAR}, #{latestchaptername,jdbcType=VARCHAR}, 
+      #{latestchapterid,jdbcType=BIGINT}, #{addtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=TINYINT}, #{vaild,jdbcType=TINYINT}, #{ishaschapter,jdbcType=TINYINT}, 
+      #{clicknum,jdbcType=INTEGER}, #{downnum,jdbcType=INTEGER}, #{chapteroldid,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.novel.common.pojo.TbNovel" >
+    insert into tb_novel
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="netid != null" >
+        netid,
+      </if>
+      <if test="tittle != null" >
+        tittle,
+      </if>
+      <if test="author != null" >
+        author,
+      </if>
+      <if test="tid != null" >
+        tid,
+      </if>
+      <if test="tname != null" >
+        tname,
+      </if>
+      <if test="introduction != null" >
+        introduction,
+      </if>
+      <if test="imgpath != null" >
+        imgpath,
+      </if>
+      <if test="latestchaptername != null" >
+        latestchaptername,
+      </if>
+      <if test="latestchapterid != null" >
+        latestchapterid,
+      </if>
+      <if test="addtime != null" >
+        addtime,
+      </if>
+      <if test="updatetime != null" >
+        updatetime,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="vaild != null" >
+        vaild,
+      </if>
+      <if test="ishaschapter != null" >
+        ishaschapter,
+      </if>
+      <if test="clicknum != null" >
+        clicknum,
+      </if>
+      <if test="downnum != null" >
+        downnum,
+      </if>
+      <if test="chapteroldid != null" >
+        chapteroldid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="netid != null" >
+        #{netid,jdbcType=BIGINT},
+      </if>
+      <if test="tittle != null" >
+        #{tittle,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null" >
+        #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="tid != null" >
+        #{tid,jdbcType=BIGINT},
+      </if>
+      <if test="tname != null" >
+        #{tname,jdbcType=VARCHAR},
+      </if>
+      <if test="introduction != null" >
+        #{introduction,jdbcType=VARCHAR},
+      </if>
+      <if test="imgpath != null" >
+        #{imgpath,jdbcType=VARCHAR},
+      </if>
+      <if test="latestchaptername != null" >
+        #{latestchaptername,jdbcType=VARCHAR},
+      </if>
+      <if test="latestchapterid != null" >
+        #{latestchapterid,jdbcType=BIGINT},
+      </if>
+      <if test="addtime != null" >
+        #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null" >
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="vaild != null" >
+        #{vaild,jdbcType=TINYINT},
+      </if>
+      <if test="ishaschapter != null" >
+        #{ishaschapter,jdbcType=TINYINT},
+      </if>
+      <if test="clicknum != null" >
+        #{clicknum,jdbcType=INTEGER},
+      </if>
+      <if test="downnum != null" >
+        #{downnum,jdbcType=INTEGER},
+      </if>
+      <if test="chapteroldid != null" >
+        #{chapteroldid,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.novel.common.pojo.TbNovelExample" resultType="java.lang.Integer" >
+    select count(*) from tb_novel
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tb_novel
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.netid != null" >
+        netid = #{record.netid,jdbcType=BIGINT},
+      </if>
+      <if test="record.tittle != null" >
+        tittle = #{record.tittle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.author != null" >
+        author = #{record.author,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tid != null" >
+        tid = #{record.tid,jdbcType=BIGINT},
+      </if>
+      <if test="record.tname != null" >
+        tname = #{record.tname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.introduction != null" >
+        introduction = #{record.introduction,jdbcType=VARCHAR},
+      </if>
+      <if test="record.imgpath != null" >
+        imgpath = #{record.imgpath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.latestchaptername != null" >
+        latestchaptername = #{record.latestchaptername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.latestchapterid != null" >
+        latestchapterid = #{record.latestchapterid,jdbcType=BIGINT},
+      </if>
+      <if test="record.addtime != null" >
+        addtime = #{record.addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updatetime != null" >
+        updatetime = #{record.updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=TINYINT},
+      </if>
+      <if test="record.vaild != null" >
+        vaild = #{record.vaild,jdbcType=TINYINT},
+      </if>
+      <if test="record.ishaschapter != null" >
+        ishaschapter = #{record.ishaschapter,jdbcType=TINYINT},
+      </if>
+      <if test="record.clicknum != null" >
+        clicknum = #{record.clicknum,jdbcType=INTEGER},
+      </if>
+      <if test="record.downnum != null" >
+        downnum = #{record.downnum,jdbcType=INTEGER},
+      </if>
+      <if test="record.chapteroldid != null" >
+        chapteroldid = #{record.chapteroldid,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tb_novel
+    set id = #{record.id,jdbcType=BIGINT},
+      netid = #{record.netid,jdbcType=BIGINT},
+      tittle = #{record.tittle,jdbcType=VARCHAR},
+      author = #{record.author,jdbcType=VARCHAR},
+      tid = #{record.tid,jdbcType=BIGINT},
+      tname = #{record.tname,jdbcType=VARCHAR},
+      introduction = #{record.introduction,jdbcType=VARCHAR},
+      imgpath = #{record.imgpath,jdbcType=VARCHAR},
+      latestchaptername = #{record.latestchaptername,jdbcType=VARCHAR},
+      latestchapterid = #{record.latestchapterid,jdbcType=BIGINT},
+      addtime = #{record.addtime,jdbcType=TIMESTAMP},
+      updatetime = #{record.updatetime,jdbcType=TIMESTAMP},
+      status = #{record.status,jdbcType=TINYINT},
+      vaild = #{record.vaild,jdbcType=TINYINT},
+      ishaschapter = #{record.ishaschapter,jdbcType=TINYINT},
+      clicknum = #{record.clicknum,jdbcType=INTEGER},
+      downnum = #{record.downnum,jdbcType=INTEGER},
+      chapteroldid = #{record.chapteroldid,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.novel.common.pojo.TbNovel" >
+    update tb_novel
+    <set >
+      <if test="tittle != null" >
+        tittle = #{tittle,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null" >
+        author = #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="tid != null" >
+        tid = #{tid,jdbcType=BIGINT},
+      </if>
+      <if test="tname != null" >
+        tname = #{tname,jdbcType=VARCHAR},
+      </if>
+      <if test="introduction != null" >
+        introduction = #{introduction,jdbcType=VARCHAR},
+      </if>
+      <if test="imgpath != null" >
+        imgpath = #{imgpath,jdbcType=VARCHAR},
+      </if>
+      <if test="latestchaptername != null" >
+        latestchaptername = #{latestchaptername,jdbcType=VARCHAR},
+      </if>
+      <if test="latestchapterid != null" >
+        latestchapterid = #{latestchapterid,jdbcType=BIGINT},
+      </if>
+      <if test="addtime != null" >
+        addtime = #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null" >
+        updatetime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="vaild != null" >
+        vaild = #{vaild,jdbcType=TINYINT},
+      </if>
+      <if test="ishaschapter != null" >
+        ishaschapter = #{ishaschapter,jdbcType=TINYINT},
+      </if>
+      <if test="clicknum != null" >
+        clicknum = #{clicknum,jdbcType=INTEGER},
+      </if>
+      <if test="downnum != null" >
+        downnum = #{downnum,jdbcType=INTEGER},
+      </if>
+      <if test="chapteroldid != null" >
+        chapteroldid = #{chapteroldid,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+      and netid = #{netid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.novel.common.pojo.TbNovel" >
+    update tb_novel
+    set tittle = #{tittle,jdbcType=VARCHAR},
+      author = #{author,jdbcType=VARCHAR},
+      tid = #{tid,jdbcType=BIGINT},
+      tname = #{tname,jdbcType=VARCHAR},
+      introduction = #{introduction,jdbcType=VARCHAR},
+      imgpath = #{imgpath,jdbcType=VARCHAR},
+      latestchaptername = #{latestchaptername,jdbcType=VARCHAR},
+      latestchapterid = #{latestchapterid,jdbcType=BIGINT},
+      addtime = #{addtime,jdbcType=TIMESTAMP},
+      updatetime = #{updatetime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=TINYINT},
+      vaild = #{vaild,jdbcType=TINYINT},
+      ishaschapter = #{ishaschapter,jdbcType=TINYINT},
+      clicknum = #{clicknum,jdbcType=INTEGER},
+      downnum = #{downnum,jdbcType=INTEGER},
+      chapteroldid = #{chapteroldid,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+      and netid = #{netid,jdbcType=BIGINT}
+  </update>
+  
+   <insert id="batchInsert" parameterType="java.util.List">
+  insert into tb_novel (id, netid, tittle, 
+      author, tid, tname, 
+      introduction, imgpath, latestchaptername, 
+      latestchapterid, addtime, updatetime, 
+      status, vaild, ishaschapter, 
+      clicknum, downnum)
+    VALUES
+  	<foreach collection="list" index="index" item="item" separator=",">
+      (#{item.id,jdbcType=BIGINT}, #{item.netid,jdbcType=BIGINT}, #{item.tittle,jdbcType=VARCHAR}, 
+      #{item.author,jdbcType=VARCHAR}, #{item.tid,jdbcType=BIGINT}, #{item.tname,jdbcType=VARCHAR}, 
+      #{item.introduction,jdbcType=VARCHAR}, #{item.imgpath,jdbcType=VARCHAR}, #{item.latestchaptername,jdbcType=VARCHAR}, 
+      #{item.latestchapterid,jdbcType=BIGINT}, #{item.addtime,jdbcType=TIMESTAMP}, #{item.updatetime,jdbcType=TIMESTAMP}, 
+      #{item.status,jdbcType=TINYINT}, #{item.vaild,jdbcType=TINYINT}, #{item.ishaschapter,jdbcType=TINYINT}, 
+      #{item.clicknum,jdbcType=INTEGER}, #{item.downnum,jdbcType=INTEGER})
+  	</foreach>
+  </insert>
+  
+  
+  
+  
+</mapper>
