@@ -1,0 +1,47 @@
+# Created by .ignore support plugin (hsz.mobi)
+### Java template
+# Compiled class file
+*.class
+
+# Log file
+*.log
+
+# BlueJ files
+*.ctxt
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+.gitignore
+.idea/
+novel.common/novel.common.iml
+novel.manage/novel.manage.iml
+novel.parent/novel.parent.iml
+novel.spider/novel.spider.iml
+novel.manage/target/
+novel.manage/target/apache-tomcat-maven-plugin/
+novel.manage/target/classes/dozer/
+novel.manage/target/classes/log4j.properties
+novel.manage/target/classes/log4j2.properties
+novel.manage/target/classes/mybatis/
+novel.manage/target/classes/resource/
+novel.manage/target/classes/spring/
+novel.manage/target/generated-sources/
+novel.manage/target/maven-status/
+novel.manage/target/tomcat/conf/
+novel.manage/target/tomcat/logs/
+novel.manage/target/tomcat/webapps/
+novel.manage/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/WEB_002dINF/jsp/index_jsp.java
+novel.manage/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/WEB_002dINF/jsp/task_002dlist_jsp.java
