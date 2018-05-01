@@ -1,0 +1,9 @@
+0:0:0:0:0:0:0:1 - - [01/May/2018:10:14:21 +0800] "GET / HTTP/1.1" 200 2646 http-bio-9084-exec-1 404
+0:0:0:0:0:0:0:1 - - [01/May/2018:10:14:21 +0800] "GET /css/taotao.css HTTP/1.1" 200 421 http-bio-9084-exec-4 8
+0:0:0:0:0:0:0:1 - - [01/May/2018:10:14:21 +0800] "GET /js/jquery-easyui-1.4.1/themes/icon.css HTTP/1.1" 200 2430 http-bio-9084-exec-3 8
+0:0:0:0:0:0:0:1 - - [01/May/2018:10:14:21 +0800] "GET /js/jquery-easyui-1.4.1/locale/easyui-lang-zh_CN.js HTTP/1.1" 200 2487 http-bio-9084-exec-8 13
+0:0:0:0:0:0:0:1 - - [01/May/2018:10:14:21 +0800] "GET /js/jquery-easyui-1.4.1/themes/default/images/tree_icons.png HTTP/1.1" 200 3115 http-bio-9084-exec-10 3
+0:0:0:0:0:0:0:1 - - [01/May/2018:10:14:21 +0800] "GET /favicon.ico HTTP/1.1" 404 997 http-bio-9084-exec-4 13
+0:0:0:0:0:0:0:1 - - [01/May/2018:10:14:23 +0800] "GET /js/jquery-easyui-1.4.1/themes/default/images/loading.gif HTTP/1.1" 200 1737 http-bio-9084-exec-3 2
+0:0:0:0:0:0:0:1 - - [01/May/2018:10:14:23 +0800] "GET /novel-list?_=1525140861566 HTTP/1.1" 200 5833 http-bio-9084-exec-4 49
+0:0:0:0:0:0:0:1 - - [01/May/2018:10:14:23 +0800] "POST /novel/list HTTP/1.1" 200 21372 http-bio-9084-exec-4 428
