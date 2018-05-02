@@ -32,11 +32,14 @@
 	            <td>点击量:</td>
 	            <td>${tbNovel.clicknum} </td>
 	        </tr>
-	         <tr>
+			<tr>
 	            <td>是否有效:</td>
 	            <td>${tbNovel.vaild == 1 ? '无效':'有效'} </td>
 	        </tr>
-	         
+			<tr>
+				<td>章节目录:</td>
+				<td><a href="" onclick="constructionManager(${tbNovel.id},${tbNovel.netid})">章节目录</a> </td>
+			</tr>
 	        <tr>
 	            <td>书籍图片:</td>
 	            	<td> 
@@ -76,53 +79,36 @@
 		// 加载书籍描述
         $.getJSON('/novel/desc/'+ ${tbNovel.netid}  +'/'+${tbNovel.id},function(_data){
             if(_data.status == 200){
-                //UM.getEditor('itemeEditDescEditor').setContent(_data.data.itemDesc, false);
 				 itemEditEditor.html(_data.data.introduction);
 
                 $("#imgdiv").append("<li><a href='http://www.kanshuzhong.com"+_data.data.imgpath+"' target='_blank'><img src='http://www.kanshuzhong.com"+_data.data.imgpath+"' width='80' height='50' /></a></li>");
-                //	.find("ul").append("<li><a href='http://www.kanshuzhong.com/image/0/905/905s.jpg' target='_blank'><img src=''http://www.kanshuzhong.com/image/0/905/905s.jpg'' width='80' height='50' /></a></li>");
             }
         });
 		}
 
 
 	//initDesc();
-	function submitForm(){
-		if(!$('#itemeEditForm').form('validate')){
-			$.messager.alert('提示','表单还未填写完成!');
-			return ;
-		}
-		$("#itemeEditForm [name=price]").val(eval($("#itemeEditForm [name=priceView]").val()) * 1000);
-		itemEditEditor.sync();
-		
-		var paramJson = [];
-		$("#itemeEditForm .params li").each(function(i,e){
-			var trs = $(e).find("tr");
-			var group = trs.eq(0).text();
-			var ps = [];
-			for(var i = 1;i<trs.length;i++){
-				var tr = trs.eq(i);
-				ps.push({
-					"k" : $.trim(tr.find("td").eq(0).find("span").text()),
-					"v" : $.trim(tr.find("input").val())
-				});
-			}
-			paramJson.push({
-				"group" : group,
-				"params": ps
-			});
-		});
-		paramJson = JSON.stringify(paramJson);
-		
-		$("#itemeEditForm [name=itemParams]").val(paramJson);
-		
-		$.post("/rest/item/update",$("#itemeEditForm").serialize(), function(data){
-			if(data.status == 200){
-				$.messager.alert('提示','修改商品成功!','info',function(){
-					$("#itemEditWindow").window('close');
-					$("#itemList").datagrid("reload");
-				});
-			}
-		});
-	}
+    function constructionManager(id,netId){
+        alert(id);
+        alert(netId);
+        var tabs = $("#tabs");
+        var tab = tabs.tabs("getTab","章节目录");
+        if(tab){
+            tabs.tabs("add",{
+                title:"章节目录",
+                href: '/novel/chapter/'+netId+'/'+id,
+                closable:true,
+                bodyCls:"content"
+            });
+        }else{
+            tabs.tabs('add',{
+                title:"书籍详情",
+                href: '/novel/chapter/'+netId+'/'+id,
+                closable:true,
+                bodyCls:"content"
+            });
+        }
+
+    }
+
 </script>

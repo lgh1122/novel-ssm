@@ -1,11 +1,16 @@
 package com.novel.manage.test;
 
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import com.novel.common.mapper.TbNetMapper;
+import com.novel.common.pojo.TbNet;
+import com.novel.common.pojo.TbNovel;
+import com.novel.manage.converter.ManageConvent;
+import com.novel.manage.scheduler.TaskManager;
+import com.novel.manage.storage.ChapterProcessor;
+import com.novel.manage.storage.NovelProcessor;
+import com.novel.manage.storage.impl.KanShuZhongChapterStorageImpl;
+import com.novel.manage.storage.impl.KanShuZhongNovelStorageImpl;
+import com.novel.spider.entitys.SpiderNovel;
+import com.novel.spider.util.NovelSpiderUtil;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
@@ -15,16 +20,11 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.novel.common.mapper.TbNetMapper;
-import com.novel.common.pojo.TbNet;
-import com.novel.common.pojo.TbNovel;
-import com.novel.manage.converter.ManageConvent;
-import com.novel.manage.storage.ChapterProcessor;
-import com.novel.manage.storage.NovelProcessor;
-import com.novel.manage.storage.impl.KanShuZhongChapterStorageImpl;
-import com.novel.manage.storage.impl.KanShuZhongNovelStorageImpl;
-import com.novel.spider.entitys.SpiderNovel;
-import com.novel.spider.util.NovelSpiderUtil;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class ManageTest extends BaseJunitTest {
 	
@@ -34,8 +34,8 @@ public class ManageTest extends BaseJunitTest {
 	
 	 @Autowired
 	 static Mapper  mapper;
-	 
-	 
+
+
 	 @Test
 	    public void testNotSameAttributeMapping() {
 		    SpiderNovel novel = new SpiderNovel();
