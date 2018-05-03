@@ -17,8 +17,7 @@
 			<td>3001</td>            
 			<td>初始小说书籍数据</td>            
 			<td>看书中</td>            
-			<td>插入</td>            
-			            
+			<td>插入</td>
 		</tr>                          
 		<tr> 
 		<td><input type="checkbox" ></td>                                  

@@ -1,13 +1,13 @@
 package com.novel.manage.controller;
 
  
+import com.novel.common.pojo.TbQuartzConfig;
 import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.novel.common.pojo.UtiQuartzConfig;
 import com.novel.manage.scheduler.TaskManager;
 
 /**
@@ -23,15 +23,15 @@ public class TestController {
     @RequestMapping("/add")
     @ResponseBody
     public String testAddTask() throws ClassNotFoundException, NoSuchMethodException, InstantiationException, SchedulerException, IllegalAccessException {
-        UtiQuartzConfig utiQuartzConfig = new UtiQuartzConfig();
-        utiQuartzConfig.setId((long) 2);
-        utiQuartzConfig.setJobCode("autoTest");
-        utiQuartzConfig.setConCurrent("1");
-        utiQuartzConfig.setCronExpression("0/5 * * * * ?");
-        utiQuartzConfig.setTargetObject("com.novel.manage.scheduler.TestJob");
-        utiQuartzConfig.setTargetMethod("autoTest");
-        utiQuartzConfig.setValidStatus("1");
-        jobManager.saveJob(utiQuartzConfig);
+        TbQuartzConfig tbQuartzConfig = new TbQuartzConfig();
+        tbQuartzConfig.setId((long) 2);
+        tbQuartzConfig.setJobCode("autoTest");
+        tbQuartzConfig.setConCurrent("1");
+        tbQuartzConfig.setCronExpression("0/5 * * * * ?");
+        tbQuartzConfig.setTargetObject("com.novel.manage.scheduler.TestJob");
+        tbQuartzConfig.setTargetMethod("autoTest");
+        tbQuartzConfig.setValidStatus("1");
+        jobManager.saveJob(tbQuartzConfig);
         return "success";
     }
 }

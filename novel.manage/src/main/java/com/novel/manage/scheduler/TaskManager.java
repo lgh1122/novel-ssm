@@ -2,6 +2,7 @@ package com.novel.manage.scheduler;
 
 import java.util.List;
 
+import com.novel.common.pojo.TbQuartzConfig;
 import org.apache.log4j.Logger;
 import org.quartz.CronScheduleBuilder;
 import org.quartz.CronTrigger;
@@ -14,8 +15,6 @@ import org.quartz.TriggerKey;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean;
-
-import com.novel.common.pojo.UtiQuartzConfig;
 
 /**
  * Created by Admin on 2017/11/10.
@@ -38,9 +37,9 @@ public class TaskManager implements InitializingBean{
         try {
           /*  QueryRule queryRule = QueryRule.getInstance();
             queryRule.addEqual("validStatus","1");*/
-            List<UtiQuartzConfig> quartzConfigs = null;//databseDao.findAll(UtiQuartzConfig.class,queryRule);
-            for (UtiQuartzConfig utiQuartzConfig : quartzConfigs){
-                saveJob(utiQuartzConfig);
+            List<TbQuartzConfig> quartzConfigs = null;//databseDao.findAll(TbQuartzConfig.class,queryRule);
+            for (TbQuartzConfig tbQuartzConfig : quartzConfigs){
+                saveJob(tbQuartzConfig);
             }
             LOG.warn("定时任务初始化成功------------------"+quartzConfigs.size()+"------------------");
         }catch (Exception e){
@@ -52,31 +51,31 @@ public class TaskManager implements InitializingBean{
 
     /**
      * 保存任务，同时进行更新或启动
-     * @param utiQuartzConfig
+     * @param tbQuartzConfig
      * @throws ClassNotFoundException
      * @throws IllegalAccessException
      * @throws InstantiationException
      * @throws NoSuchMethodException
      * @throws SchedulerException
      */
-    public  void saveJob(UtiQuartzConfig utiQuartzConfig) throws ClassNotFoundException, IllegalAccessException, InstantiationException, NoSuchMethodException, SchedulerException {
-       if ("1".equals(utiQuartzConfig.getValidStatus())){
-           TriggerKey triggerKey = TriggerKey.triggerKey(utiQuartzConfig.getJobCode(),TRIGGER_GROUP);
+    public  void saveJob(TbQuartzConfig tbQuartzConfig) throws ClassNotFoundException, IllegalAccessException, InstantiationException, NoSuchMethodException, SchedulerException {
+       if ("1".equals(tbQuartzConfig.getValidStatus())){
+           TriggerKey triggerKey = TriggerKey.triggerKey(tbQuartzConfig.getJobCode(),TRIGGER_GROUP);
            CronTrigger trigger = (CronTrigger) scheduler.getTrigger(triggerKey);
            if (trigger == null){
                MethodInvokingJobDetailFactoryBean methodInvokingJobDetailFactoryBean = new MethodInvokingJobDetailFactoryBean();
-               methodInvokingJobDetailFactoryBean.setName(utiQuartzConfig.getJobCode());
-               methodInvokingJobDetailFactoryBean.setTargetObject(Class.forName(utiQuartzConfig.getTargetObject()).newInstance());
-               methodInvokingJobDetailFactoryBean.setTargetMethod(utiQuartzConfig.getTargetMethod());
+               methodInvokingJobDetailFactoryBean.setName(tbQuartzConfig.getJobCode());
+               methodInvokingJobDetailFactoryBean.setTargetObject(Class.forName(tbQuartzConfig.getTargetObject()).newInstance());
+               methodInvokingJobDetailFactoryBean.setTargetMethod(tbQuartzConfig.getTargetMethod());
                methodInvokingJobDetailFactoryBean.afterPropertiesSet();
-               methodInvokingJobDetailFactoryBean.setConcurrent("1".equals(utiQuartzConfig.getConCurrent()) ? true : false);
+               methodInvokingJobDetailFactoryBean.setConcurrent("1".equals(tbQuartzConfig.getConCurrent()) ? true : false);
                JobDetail jobDetail = methodInvokingJobDetailFactoryBean.getObject();
-               jobDetail.getJobDataMap().put("scheduleJob",utiQuartzConfig);
-               CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(utiQuartzConfig.getCronExpression());
-               trigger = TriggerBuilder.newTrigger().withIdentity(utiQuartzConfig.getJobCode(),JOB_GROUP).withSchedule(scheduleBuilder).build();
+               jobDetail.getJobDataMap().put("scheduleJob",tbQuartzConfig);
+               CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(tbQuartzConfig.getCronExpression());
+               trigger = TriggerBuilder.newTrigger().withIdentity(tbQuartzConfig.getJobCode(),JOB_GROUP).withSchedule(scheduleBuilder).build();
                scheduler.scheduleJob(jobDetail,trigger);
            }else {
-               CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(utiQuartzConfig.getCronExpression());
+               CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(tbQuartzConfig.getCronExpression());
                trigger = trigger.getTriggerBuilder().withIdentity(triggerKey).withSchedule(scheduleBuilder).build();
                scheduler.rescheduleJob(triggerKey,trigger);
            }

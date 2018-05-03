@@ -2,7 +2,8 @@
 SQLyog Professional v12.08 (64 bit)
 MySQL - 5.6.23 : Database - db_novel4
 *********************************************************************
-*/
+*/
+
 
 /*!40101 SET NAMES utf8 */;
 
@@ -92,27 +93,28 @@ CREATE TABLE `tb_type` (
 
 DROP TABLE IF EXISTS `uti_quartz_config`;
 
-CREATE TABLE `uti_quartz_config` (
-  `id` bigint(10) NOT NULL COMMENT 'ID',
-  `job_code` varchar(80) NOT NULL COMMENT '任务编号',
-  `job_description` varchar(255) DEFAULT NULL COMMENT '描述',
-  `user_code` varchar(64) DEFAULT NULL,
-  `SECOND` varchar(80) DEFAULT NULL,
-  `MINUTE` varchar(80) DEFAULT NULL,
-  `HOUR` varchar(80) DEFAULT NULL,
-  `DAY` varchar(80) DEFAULT NULL,
-  `MONTH` varchar(80) DEFAULT NULL,
-  `WEEK` varchar(80) DEFAULT NULL,
-  `YEAR` varchar(80) DEFAULT NULL,
-  `cron_expression` varchar(255) NOT NULL COMMENT '执行时间表达式',
-  `target_object` varchar(255) NOT NULL COMMENT '任务实现类',
-  `target_method` varchar(255) NOT NULL COMMENT '任务执行方法',
-  `con_current` varchar(1) NOT NULL COMMENT '是否并发执行  1 并发 0 不并发推迟执行',
-  `valid_status` varchar(1) NOT NULL COMMENT '是否有效  1 有效 0 无效',
-  `insert_time` datetime DEFAULT NULL,
-  `operate_time` datetime DEFAULT NULL,
+
+CREATE TABLE `tb_quartz_config` (
+  `id` BIGINT(10) NOT NULL COMMENT 'ID',
+  `job_code` VARCHAR(80) NOT NULL COMMENT '任务编号',
+  `job_description` VARCHAR(255) DEFAULT NULL COMMENT '任务描述',
+  `cron_expression` VARCHAR(255) NOT NULL COMMENT '执行时间表达式',
+   `cron_expression_desc` VARCHAR(255) NOT NULL COMMENT '执行时间表达式描述',
+  `target_object` VARCHAR(255) NOT NULL COMMENT '任务实现类',
+  `target_method` VARCHAR(255) NOT NULL COMMENT '任务执行方法',
+  `con_current` VARCHAR(1) NOT NULL COMMENT '是否并发执行  1 并发 0 不并发推迟执行',
+  `valid_status` VARCHAR(1) NOT NULL COMMENT '是否有效  1 有效 0 无效',
+  `insert_time` DATETIME DEFAULT NULL,
+  `update_time` DATETIME DEFAULT NULL,
+  `SECOND` VARCHAR(80) DEFAULT NULL,
+  `MINUTE` VARCHAR(80) DEFAULT NULL,
+  `HOUR` VARCHAR(80) DEFAULT NULL,
+  `DAY` VARCHAR(80) DEFAULT NULL,
+  `MONTH` VARCHAR(80) DEFAULT NULL,
+  `WEEK` VARCHAR(80) DEFAULT NULL,
+  `YEAR` VARCHAR(80) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
