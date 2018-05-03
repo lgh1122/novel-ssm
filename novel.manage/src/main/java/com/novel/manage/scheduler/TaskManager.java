@@ -1,12 +1,21 @@
 package com.novel.manage.scheduler;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
-import org.quartz.*;
+import org.quartz.CronScheduleBuilder;
+import org.quartz.CronTrigger;
+import org.quartz.JobDetail;
+import org.quartz.JobKey;
+import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
+import org.quartz.TriggerBuilder;
+import org.quartz.TriggerKey;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean;
 
-import java.util.List;
+import com.novel.common.pojo.UtiQuartzConfig;
 
 /**
  * Created by Admin on 2017/11/10.
