@@ -4,6 +4,7 @@ import com.novel.common.pojo.TbNovel;
 import com.novel.common.util.EUDataGridResult;
 import com.novel.common.util.JsonResult;
 import com.novel.manage.service.TbNovelService;
+import com.novel.manage.service.TbQuartzService;
 import com.novel.manage.storage.ChapterProcessor;
 import com.novel.manage.storage.NovelProcessor;
 import com.novel.manage.storage.impl.KanShuZhongChapterStorageImpl;
@@ -24,14 +25,10 @@ import java.io.FileNotFoundException;
 public class TaskInfoController {
 	 
 	@Autowired
-	private TbNovelService tbNovelService;
-	
-	
+	private TbQuartzService tbQuartzService;
 	
 
-
-		
-	@RequestMapping(value = "/spider")
+	/*@RequestMapping(value = "/spider")
 	@ResponseBody 
     public String doSpiderNovel(String id){
 		NovelProcessor processor;
@@ -51,87 +48,16 @@ public class TaskInfoController {
 			e.printStackTrace();
 		}
 		return "error";
-    }
+    }*/
 	 
 	 
 	@RequestMapping(value = "/list")
 	@ResponseBody
 	public EUDataGridResult gettbNovelList(@RequestParam(defaultValue = "1") Integer page,
 			@RequestParam(defaultValue = "30") Integer rows,TbNovel novel ) {
-
-		EUDataGridResult result = tbNovelService.getTbNovelList(page, rows,novel);
+		EUDataGridResult result = tbQuartzService.getTbQuartzList(page, rows,novel);
 		return result;
 	}
 	
-	/*@RequestMapping(value = "/bookList")
-	@ResponseBody  
-	public JsonResult getTbBookList(@RequestParam(required = false ,defaultValue = "0" ) int paramTid,
-			@RequestParam(required = false, defaultValue = "1") int pageNo,
-			@RequestParam(required = false,defaultValue = "" ) String paramName) {
-		
-		TbNovel serchNovel = new TbNovel();
-		if(paramName !=null && !"".equals(paramName)){
-			serchNovel.setName(paramName);
-		}
-		if(paramTid  < 0){
-			paramTid = 0;
-		} 
-		//serchBook.setTid((long)paramTid);
-		if(pageNo == 0){
-			pageNo= 1;
-		}
-		JsonResult result = novelService.getNovelList(pageNo,serchNovel);
-		return result;
-	} 
-	 
-	 
-	 
- 	@RequestMapping(value="/info/{bookId}")
-	public String getBookByKey(@PathVariable Long bookId, Model model){
-	    //根据书籍ID查看书籍信息
-		TbNovel novel = novelService.selectNovelInfoByKey(bookId); 
-		model.addAttribute("novel", novel);
-		return "bookInfo";
-	} 
- 	@RequestMapping(value="/chapter/{bookId}")
- 	public String getNovelChapterByNovelId(@PathVariable Long bookId, Model model){
- 		//根据书籍ID查看书籍信息
- 		 
- 		long start = System.currentTimeMillis();
- 		List<TbChapter> chapters = chapterService.getChaptersByNovelId(bookId);
- 		long middle = System.currentTimeMillis();
- 		TbNovel novel = novelService.selectNovelInfoByKey(bookId); 
- 		long end = System.currentTimeMillis();
- 		
- 		 SimpleDateFormat formatter = new SimpleDateFormat("yyyy年-MM月dd日-HH时mm分ss秒");
 
- 		Date startdate = new Date(start);
- 		Date middledate = new Date(middle);
- 		Date enddate = new Date(end);
-
- 		System.out.println(start+"start --- "+formatter.format(startdate));
- 		System.out.println(middle+"middle --- "+formatter.format(middledate));
- 		System.out.println(end+"end --- "+formatter.format(enddate));
- 		System.out.println("-----------******------------");
- 		model.addAttribute("novel", novel);
- 		model.addAttribute("chapters", chapters);
- 		model.addAttribute("count", chapters.size());
- 		return "bookdire";
- 	} 
-	
- 	@RequestMapping(value="/chapter/{bookId}/{chapterId}")
- 	public String getChapterDatilByNovelId(@PathVariable Long bookId,@PathVariable Long chapterId, Model model){
- 		//编号获取章节内容
- 		TbChapter chapter = chapterService.getChaptersById(bookId, chapterId); 
-		ChapterDetail cd = chapterService.getChaptersDetailById(bookId,chapterId);
- 		String content = cd.getContent();
- 		content = content.replace("  " ,"&nbsp;&nbsp;").replace("\n" ,"<br />");
-		cd.setContent(content);
-		 
- 		model.addAttribute("cd", cd);
- 		model.addAttribute("chapter", chapter);
- 		 
- 		return "bookread";
- 	} */
-	
 }

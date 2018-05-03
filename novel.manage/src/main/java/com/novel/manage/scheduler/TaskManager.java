@@ -2,7 +2,9 @@ package com.novel.manage.scheduler;
 
 import java.util.List;
 
+import com.novel.common.mapper.TbQuartzConfigMapper;
 import com.novel.common.pojo.TbQuartzConfig;
+import com.novel.common.pojo.TbQuartzConfigExample;
 import org.apache.log4j.Logger;
 import org.quartz.CronScheduleBuilder;
 import org.quartz.CronTrigger;
@@ -30,15 +32,19 @@ public class TaskManager implements InitializingBean{
     @Autowired
     private Scheduler scheduler;
 
-
+    @Autowired
+    private TbQuartzConfigMapper tbQuartzConfigMapper;
 
     @Override
     public void afterPropertiesSet() throws Exception {
         try {
-          /*  QueryRule queryRule = QueryRule.getInstance();
-            queryRule.addEqual("validStatus","1");*/
-            List<TbQuartzConfig> quartzConfigs = null;//databseDao.findAll(TbQuartzConfig.class,queryRule);
-            for (TbQuartzConfig tbQuartzConfig : quartzConfigs){
+
+            TbQuartzConfigExample example = new TbQuartzConfigExample();
+            TbQuartzConfigExample.Criteria  criteria =  example.createCriteria();
+            criteria.andValidStatusEqualTo("1");
+            // 查询书籍列表
+            List<TbQuartzConfig> quartzConfigs = tbQuartzConfigMapper.selectByExample(example);
+             for (TbQuartzConfig tbQuartzConfig : quartzConfigs){
                 saveJob(tbQuartzConfig);
             }
             LOG.warn("定时任务初始化成功------------------"+quartzConfigs.size()+"------------------");

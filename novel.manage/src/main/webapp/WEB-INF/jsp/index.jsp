@@ -27,7 +27,8 @@
 	         		<!-- <li data-options="attributes:{'url':'item-add'}">新增商品</li> -->
 	         		<li data-options="attributes:{'url':'novel-list'}">查询书籍</li>
 	         		<li data-options="attributes:{'url':'item-param-list'}">规格参数</li>
-	         		<li data-options="attributes:{'url':'task-list'}">任务列表</li>
+	         		<li data-options="attributes:{'url':'task-list1'}">任务列表</li>
+	         		<li data-options="attributes:{'url':'task-list'}">定时任务</li>
 	         	</ul>
          	</li>
          	<li>
