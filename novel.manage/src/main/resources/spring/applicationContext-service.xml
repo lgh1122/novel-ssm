@@ -9,9 +9,9 @@
 	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
 	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
 	
+	
 	<!-- 2.1 扫描spring管理类 -->
 	<context:component-scan base-package="com.novel.manage.service"/>
 	<context:component-scan base-package="com.novel.manage.storage"/>
-	<context:component-scan base-package="com.novel.manage.listener"/>
-	
+	<context:component-scan base-package="com.novel.manage.listener"/>	
 </beans>
