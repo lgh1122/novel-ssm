@@ -4,7 +4,7 @@
     <thead>
         <tr>
         	<th data-options="field:'ck',checkbox:true"></th>
-        	<th data-options="field:'id',width:60,formatter:goNovelInfo">任务ID</th>
+        	<th data-options="field:'id',width:60">任务ID</th>
             <th data-options="field:'jobCode',width:200">任务编号</th>
             <th data-options="field:'jobDescription',width:300">任务描述</th>
             <th data-options="field:'cronExpression',width:300">执行时间表达式</th>
@@ -45,7 +45,13 @@
 </div> 
 <script>
 
-
+function seachNovel(value, name) {
+	var novel = {};
+	novel[name] = value;
+	// comparativePriceVO["provinceId"]  =  $("#provinceId").val();  
+	//alert(value + ":" + name);
+	$('#itemList').datagrid('load', novel);
+}
 	function getSelectionsIds() {
 		var itemList = $("#itemList");
 		var sels = itemList.datagrid("getSelections");
