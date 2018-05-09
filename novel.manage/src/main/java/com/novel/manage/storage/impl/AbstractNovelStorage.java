@@ -46,7 +46,7 @@ public abstract class AbstractNovelStorage implements NovelProcessor {
 	}
 		
 	
-	public void processUpdateold(){
+	/*public void processUpdateold(){
 
 		ExecutorService service = Executors.newFixedThreadPool(tasks.size());
 		List<Future<String>> futures = new ArrayList<Future<String>>(tasks.size());
@@ -107,8 +107,8 @@ public abstract class AbstractNovelStorage implements NovelProcessor {
 			}
 		}
 	
-	}
-	public void process() {
+	}*/
+	/*public void process() {
 		ExecutorService service = Executors.newFixedThreadPool(tasks.size());
 		List<Future<String>> futures = new ArrayList<Future<String>>(tasks.size());
 		for (Entry<String, String> entry : tasks.entrySet()) {
@@ -152,7 +152,7 @@ public abstract class AbstractNovelStorage implements NovelProcessor {
 				e.printStackTrace();
 			}
 		}
-	}
+	}*/
 	
 	
 	@Override
@@ -174,7 +174,6 @@ public abstract class AbstractNovelStorage implements NovelProcessor {
 						try {
 							 
 							System.err.println("开始抓取[" + key + "] 的 URL:" + spider.next());
-							
 							List<SpiderNovel> novels = iterator.next();
 							List<TbNovel> tbNovels = ManageConvent.spiderToTbNovelList(novels);
 							tbNovelService = (TbNovelService) ServiceLocator.getService("tbNovelService");
@@ -217,7 +216,6 @@ public abstract class AbstractNovelStorage implements NovelProcessor {
 					Iterator<List<SpiderNovel>> iterator = spider.iterator(value, 10);
 					int k = 0;
 					while (iterator.hasNext()) {
-						 
 						k++;
 						try {
  							System.err.println("开始抓取[" + key + "] 的 URL:" + spider.next());
@@ -225,8 +223,15 @@ public abstract class AbstractNovelStorage implements NovelProcessor {
 							List<TbNovel> tbNovels = ManageConvent.spiderToTbNovelList(novels);
 							tbNovelService = (TbNovelService) ServiceLocator.getService("tbNovelService");
 							for (TbNovel tbNovel : tbNovels) {
+
+								TbNovel oldNovel = tbNovelService.getNovelDescByID(tbNovel.getNetid(),tbNovel.getId());
+
 								// do insert or update 
-								tbNovelService.insertOrupdateTbNovel(tbNovel);	
+								tbNovelService.insertOrupdateTbNovel(tbNovel);
+
+								//IChapterSpider chapterSpider = ChapterSpiderFactory.getChapterSpider("http://www.kanshuzhong.com"+tbNovel.getNetUrl());
+								//										Map<String, Object> map = chapterSpider.getsChapter(tbNovel);
+
 							}
 						} catch (Exception e) {
 							e.printStackTrace();

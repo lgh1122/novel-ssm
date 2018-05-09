@@ -6,10 +6,7 @@ package com.novel.manage.storage;
  * 
  */
 public interface NovelProcessor {
-	/**
-	 * 一个处理方法 初始执行书籍列表获取 
-	 */
-	public void process();
+
 	
 	/**
 	 * 方法进行每天的更新数据操作
