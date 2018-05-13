@@ -6,7 +6,7 @@
         	<th data-options="field:'ck',checkbox:true"></th>
         	 
         	<th data-options="field:'id',width:60,formatter:goNovelInfo">书籍ID</th>
-            <th data-options="field:'tittle',width:200">书籍标题</th>
+            <th data-options="field:'title',width:200">书籍标题</th>
             <th data-options="field:'tid',width:200,hidden:'true'">书籍类目ID</th>
             <th data-options="field:'netid',width:200,hidden:'true'">书籍网站ID</th>
             <th data-options="field:'tname',width:100">书籍类目</th>
@@ -42,7 +42,7 @@
          <div id="tb" style="float: right;">  
          <input id="ss" class="easyui-searchbox" style="width:300px" data-options="searcher:seachNovel,prompt:'Please Input Value',menu:'#mm'"></input>
  			<div id="mm" style="width:120px">
-				<div data-options="name:'tittle',iconCls:'icon-ok'">书籍名称</div>
+				<div data-options="name:'title',iconCls:'icon-ok'">书籍名称</div>
 				<div data-options="name:'author'">作者</div>
 				<div data-options="name:'tname'">类型</div>
  			</div>

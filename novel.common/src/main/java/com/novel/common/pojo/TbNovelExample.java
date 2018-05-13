@@ -225,73 +225,73 @@ public class TbNovelExample {
             return (Criteria) this;
         }
 
-        public Criteria andTittleIsNull() {
-            addCriterion("tittle is null");
+        public Criteria andtitleIsNull() {
+            addCriterion("title is null");
             return (Criteria) this;
         }
 
-        public Criteria andTittleIsNotNull() {
-            addCriterion("tittle is not null");
+        public Criteria andtitleIsNotNull() {
+            addCriterion("title is not null");
             return (Criteria) this;
         }
 
-        public Criteria andTittleEqualTo(String value) {
-            addCriterion("tittle =", value, "tittle");
+        public Criteria andtitleEqualTo(String value) {
+            addCriterion("title =", value, "title");
             return (Criteria) this;
         }
 
-        public Criteria andTittleNotEqualTo(String value) {
-            addCriterion("tittle <>", value, "tittle");
+        public Criteria andtitleNotEqualTo(String value) {
+            addCriterion("title <>", value, "title");
             return (Criteria) this;
         }
 
-        public Criteria andTittleGreaterThan(String value) {
-            addCriterion("tittle >", value, "tittle");
+        public Criteria andtitleGreaterThan(String value) {
+            addCriterion("title >", value, "title");
             return (Criteria) this;
         }
 
-        public Criteria andTittleGreaterThanOrEqualTo(String value) {
-            addCriterion("tittle >=", value, "tittle");
+        public Criteria andtitleGreaterThanOrEqualTo(String value) {
+            addCriterion("title >=", value, "title");
             return (Criteria) this;
         }
 
-        public Criteria andTittleLessThan(String value) {
-            addCriterion("tittle <", value, "tittle");
+        public Criteria andtitleLessThan(String value) {
+            addCriterion("title <", value, "title");
             return (Criteria) this;
         }
 
-        public Criteria andTittleLessThanOrEqualTo(String value) {
-            addCriterion("tittle <=", value, "tittle");
+        public Criteria andtitleLessThanOrEqualTo(String value) {
+            addCriterion("title <=", value, "title");
             return (Criteria) this;
         }
 
-        public Criteria andTittleLike(String value) {
-            addCriterion("tittle like", value, "tittle");
+        public Criteria andtitleLike(String value) {
+            addCriterion("title like", value, "title");
             return (Criteria) this;
         }
 
-        public Criteria andTittleNotLike(String value) {
-            addCriterion("tittle not like", value, "tittle");
+        public Criteria andtitleNotLike(String value) {
+            addCriterion("title not like", value, "title");
             return (Criteria) this;
         }
 
-        public Criteria andTittleIn(List<String> values) {
-            addCriterion("tittle in", values, "tittle");
+        public Criteria andtitleIn(List<String> values) {
+            addCriterion("title in", values, "title");
             return (Criteria) this;
         }
 
-        public Criteria andTittleNotIn(List<String> values) {
-            addCriterion("tittle not in", values, "tittle");
+        public Criteria andtitleNotIn(List<String> values) {
+            addCriterion("title not in", values, "title");
             return (Criteria) this;
         }
 
-        public Criteria andTittleBetween(String value1, String value2) {
-            addCriterion("tittle between", value1, value2, "tittle");
+        public Criteria andtitleBetween(String value1, String value2) {
+            addCriterion("title between", value1, value2, "title");
             return (Criteria) this;
         }
 
-        public Criteria andTittleNotBetween(String value1, String value2) {
-            addCriterion("tittle not between", value1, value2, "tittle");
+        public Criteria andtitleNotBetween(String value1, String value2) {
+            addCriterion("title not between", value1, value2, "title");
             return (Criteria) this;
         }
 

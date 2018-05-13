@@ -8,7 +8,7 @@ import java.io.Serializable;
  * @date   2016年10月8日
  */
 public class Chapter implements Serializable {
-	private static final long serialVersionUID = -7574082095190014403L;
+	 private static final long serialVersionUID = -7574082095190014403L;
 	private String title;
 	private String url;
 	public String getTitle() {

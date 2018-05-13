@@ -3,7 +3,7 @@ package com.novel.common.pojo;
 import java.util.Date;
 
 public class TbNovel extends TbNovelKey {
-    private String tittle;
+    private String title;
 
     private String author;
 
@@ -35,12 +35,12 @@ public class TbNovel extends TbNovelKey {
 
     private Long chapteroldid;
 
-    public String getTittle() {
-        return tittle;
+    public String getTitle() {
+        return title;
     }
 
-    public void setTittle(String tittle) {
-        this.tittle = tittle == null ? null : tittle.trim();
+    public void setTitle(String title) {
+        this.title = title == null ? null : title.trim();
     }
 
     public String getAuthor() {

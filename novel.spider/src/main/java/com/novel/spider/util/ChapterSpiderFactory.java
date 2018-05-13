@@ -25,7 +25,6 @@ public final class ChapterSpiderFactory {
 			case DingDianXiaoShuo:
 			case BiQuGe:
 			case XBXWX :
-			case SANHAO:
 			chapterSpider = new DefaultChapterSpider(); break;
 			}
 			return chapterSpider;

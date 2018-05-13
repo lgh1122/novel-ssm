@@ -18,7 +18,7 @@
 	        </tr>
 	        <tr>
 	            <td>书籍标题:</td>
-	            <td><input class="easyui-textbox" type="text" name="tittle" data-options="required:true" style="width: 280px;"></input></td>
+	            <td><input class="easyui-textbox" type="text" name="title" data-options="required:true" style="width: 280px;"></input></td>
 	        </tr>
 	        <tr>
 	            <td>书籍作者:</td>

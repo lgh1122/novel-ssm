@@ -5,7 +5,7 @@ import java.util.Date;
 public class SpiderNovel {
     private Long id;  // 书籍编号
 
-    private String tittle;  // 书籍名称
+    private String title;  // 书籍名称
 
     private String author;  // 作者
 
@@ -30,11 +30,20 @@ public class SpiderNovel {
 
     private Date updatetime; //更新时间
 
-     
+	private Long netid;
     
     private Date lastUpdateTime;  // 最新更新时间 根据网站章节更新获取
     
     private char firstLetter;
+
+
+	public Long getNetid() {
+		return netid;
+	}
+
+	public void setNetid(Long netid) {
+		this.netid = netid;
+	}
 
 	public Long getId() {
 		return id;
@@ -44,12 +53,12 @@ public class SpiderNovel {
 		this.id = id;
 	}
 
-	public String getTittle() {
-		return tittle;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setTittle(String tittle) {
-        this.tittle = tittle == null ? null : tittle.trim();
+	public void setTitle(String title) {
+        this.title = title == null ? null : title.trim();
     }
 
 	public String getAuthor() {
@@ -162,7 +171,7 @@ public class SpiderNovel {
 
 	@Override
 	public String toString() {
-		return "SpiderNovel [id=" + id + ", tittle=" + tittle + ", author=" + author + ", tname=" + tname + ", tid="
+		return "SpiderNovel [id=" + id + ", title=" + title + ", author=" + author + ", tname=" + tname + ", tid="
 				+ tid + ", netUrl=" + netUrl + ", latestchapterid=" + latestchapterid + ", latestchaptername="
 				+ latestchaptername + ", status=" + status +   ", introduction=" + introduction
 				+ ", imgpath=" + imgpath + ", addtime=" + addtime + ", updatetime=" + updatetime  

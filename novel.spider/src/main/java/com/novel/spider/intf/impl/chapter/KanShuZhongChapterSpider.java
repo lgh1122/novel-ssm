@@ -31,7 +31,7 @@ public class KanShuZhongChapterSpider extends  AbstractChapterSpider {
 	
     @Override
 	public Map<String, Object> getsChapter(SpiderNovel novel){
-    	logger.info("---抓取 "+novel.getTittle()+"小说章节信息开始---");
+    	logger.info("---抓取 "+novel.getTitle()+"小说章节信息开始---");
 		Map<String , Object> map = new HashMap<String , Object>();
 		try {
 			String result = super.crawl( novel.getNetUrl());
@@ -65,13 +65,14 @@ public class KanShuZhongChapterSpider extends  AbstractChapterSpider {
 			String urlSelect = context.get("url");
 			for (Element a : as) {
 				SpiderChapter chapter = new SpiderChapter();
-				chapter.setTittle(a.text());
+				chapter.setTitle(a.text());
 				String baseUrl = a.absUrl("href");
-				chapter.setChapterpath(baseUrl.replace(urlSelect, ""));
+				chapter.setChapterPath(baseUrl);
 				String nameNum = baseUrl.substring(baseUrl.lastIndexOf("/")+1).replace(".html", "");
 				Long now = Long.parseLong(nameNum);
 				chapter.setId(now);
 				chapters.add(chapter);
+				chapter.setNovelId(novel.getId());
 			}
 			// 根据章节ID排序 
 			 Collections.sort(chapters, new Comparator<SpiderChapter>() {
@@ -87,7 +88,7 @@ public class KanShuZhongChapterSpider extends  AbstractChapterSpider {
 				Long now = chapter.getId();
 				if(i > 0 ){
 					// 设置当前章节前一节
-					chapter.setPrevid(prev);
+					chapter.setPrevId(prev);
 				}
 				prev = now;
 				// 已获取章节不在获取 
@@ -95,12 +96,12 @@ public class KanShuZhongChapterSpider extends  AbstractChapterSpider {
 					continue;
 				}
 				chapter.setNovelId(novel.getId());
-				chapter.setcAddTime(new Date());
+				chapter.setCAddTime(new Date());
 				
 				// 获取下一章节ID
 				if(i < size - 1){
 					SpiderChapter nextChapter = chapters.get(i+1);
-					chapter.setNextid(nextChapter.getId());
+					chapter.setNextId(nextChapter.getId());
 				}
 				if(novel.getLatestchapterid() != null && chapter.getId().equals(novel.getLatestchapterid())){
 					map.put("updateChapter", chapter);
@@ -110,12 +111,13 @@ public class KanShuZhongChapterSpider extends  AbstractChapterSpider {
 				
 			}
 			novel.setLatestchapterid(spiderChapters.get(spiderChapters.size()-1).getId());
+			novel.setLatestchaptername(spiderChapters.get(spiderChapters.size()-1).getTitle());
 			map.put("insertchapter", spiderChapters);  
 			map.put("novel", novel);
-			logger.info("---抓取 "+novel.getTittle()+"小说章节信息结束---");
+			logger.info("---抓取 "+novel.getTitle()+"小说章节信息结束---");
 			return map;
 		} catch (Exception e) {
-			logger.error("---抓取 "+novel.getTittle()+"小说章节信息发生异常---");
+			logger.error("---抓取 "+novel.getTitle()+"小说章节信息发生异常---");
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}

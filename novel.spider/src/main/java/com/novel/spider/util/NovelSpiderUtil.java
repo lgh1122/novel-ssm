@@ -38,7 +38,7 @@ public final class NovelSpiderUtil {
 		SAXReader reader = new SAXReader();
 		try {
 		     
-		 logger.info("读取规则文件Spider-Rule.xml  "+NovelSpiderUtil.class.getResource("/").getPath());  
+		 logger.info("读取规则文件Spider-Rule.xml  "+NovelSpiderUtil.class.getResource("/Spider-Rule.xml").getPath());
 		 InputStream in =   NovelSpiderUtil.class.getResourceAsStream("/Spider-Rule.xml");
 		 System.out.println(in);
 		 // reader.read(in)	

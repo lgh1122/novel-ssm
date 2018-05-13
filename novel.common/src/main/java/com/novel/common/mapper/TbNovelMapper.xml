@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.novel.common.pojo.TbNovel" >
     <id column="id" property="id" jdbcType="BIGINT" />
     <id column="netid" property="netid" jdbcType="BIGINT" />
-    <result column="tittle" property="tittle" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
     <result column="author" property="author" jdbcType="VARCHAR" />
     <result column="tid" property="tid" jdbcType="BIGINT" />
     <result column="tname" property="tname" jdbcType="VARCHAR" />
@@ -80,7 +80,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, netid, tittle, author, tid, tname, introduction, imgpath, latestchaptername, 
+    id, netid, title, author, tid, tname, introduction, imgpath, latestchaptername,
     latestchapterid, addtime, updatetime, status, vaild, ishaschapter, clicknum, downnum, 
     chapteroldid
   </sql>
@@ -117,14 +117,14 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.novel.common.pojo.TbNovel" >
-    insert into tb_novel (id, netid, tittle, 
+    insert into tb_novel (id, netid, title,
       author, tid, tname, 
       introduction, imgpath, latestchaptername, 
       latestchapterid, addtime, updatetime, 
       status, vaild, ishaschapter, 
       clicknum, downnum, chapteroldid
       )
-    values (#{id,jdbcType=BIGINT}, #{netid,jdbcType=BIGINT}, #{tittle,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=BIGINT}, #{netid,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR},
       #{author,jdbcType=VARCHAR}, #{tid,jdbcType=BIGINT}, #{tname,jdbcType=VARCHAR}, 
       #{introduction,jdbcType=VARCHAR}, #{imgpath,jdbcType=VARCHAR}, #{latestchaptername,jdbcType=VARCHAR}, 
       #{latestchapterid,jdbcType=BIGINT}, #{addtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP}, 
@@ -141,8 +141,8 @@
       <if test="netid != null" >
         netid,
       </if>
-      <if test="tittle != null" >
-        tittle,
+      <if test="title != null" >
+        title,
       </if>
       <if test="author != null" >
         author,
@@ -197,8 +197,8 @@
       <if test="netid != null" >
         #{netid,jdbcType=BIGINT},
       </if>
-      <if test="tittle != null" >
-        #{tittle,jdbcType=VARCHAR},
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
       </if>
       <if test="author != null" >
         #{author,jdbcType=VARCHAR},
@@ -262,8 +262,8 @@
       <if test="record.netid != null" >
         netid = #{record.netid,jdbcType=BIGINT},
       </if>
-      <if test="record.tittle != null" >
-        tittle = #{record.tittle,jdbcType=VARCHAR},
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=VARCHAR},
       </if>
       <if test="record.author != null" >
         author = #{record.author,jdbcType=VARCHAR},
@@ -319,7 +319,7 @@
     update tb_novel
     set id = #{record.id,jdbcType=BIGINT},
       netid = #{record.netid,jdbcType=BIGINT},
-      tittle = #{record.tittle,jdbcType=VARCHAR},
+      title = #{record.title,jdbcType=VARCHAR},
       author = #{record.author,jdbcType=VARCHAR},
       tid = #{record.tid,jdbcType=BIGINT},
       tname = #{record.tname,jdbcType=VARCHAR},
@@ -342,8 +342,8 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.novel.common.pojo.TbNovel" >
     update tb_novel
     <set >
-      <if test="tittle != null" >
-        tittle = #{tittle,jdbcType=VARCHAR},
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
       </if>
       <if test="author != null" >
         author = #{author,jdbcType=VARCHAR},
@@ -396,7 +396,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.novel.common.pojo.TbNovel" >
     update tb_novel
-    set tittle = #{tittle,jdbcType=VARCHAR},
+    set title = #{title,jdbcType=VARCHAR},
       author = #{author,jdbcType=VARCHAR},
       tid = #{tid,jdbcType=BIGINT},
       tname = #{tname,jdbcType=VARCHAR},
@@ -416,8 +416,8 @@
       and netid = #{netid,jdbcType=BIGINT}
   </update>
   
-   <insert id="batchInsert" parameterType="java.util.List">
-  insert into tb_novel (id, netid, tittle, 
+  <insert id="batchInsert" parameterType="java.util.List">
+  insert into tb_novel (id, netid, title,
       author, tid, tname, 
       introduction, imgpath, latestchaptername, 
       latestchapterid, addtime, updatetime, 
@@ -425,7 +425,7 @@
       clicknum, downnum)
     VALUES
   	<foreach collection="list" index="index" item="item" separator=",">
-      (#{item.id,jdbcType=BIGINT}, #{item.netid,jdbcType=BIGINT}, #{item.tittle,jdbcType=VARCHAR}, 
+      (#{item.id,jdbcType=BIGINT}, #{item.netid,jdbcType=BIGINT}, #{item.title,jdbcType=VARCHAR},
       #{item.author,jdbcType=VARCHAR}, #{item.tid,jdbcType=BIGINT}, #{item.tname,jdbcType=VARCHAR}, 
       #{item.introduction,jdbcType=VARCHAR}, #{item.imgpath,jdbcType=VARCHAR}, #{item.latestchaptername,jdbcType=VARCHAR}, 
       #{item.latestchapterid,jdbcType=BIGINT}, #{item.addtime,jdbcType=TIMESTAMP}, #{item.updatetime,jdbcType=TIMESTAMP}, 

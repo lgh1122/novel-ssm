@@ -1,43 +1,43 @@
 package com.novel.common.pojo;
 
 public class TbChapter extends TbChapterKey {
-    private String tittle;
+    private String title;
 
-    private String chapterpath;
+    private String chapterPath;
 
-    private Long previd;
+    private Long prevId;
 
-    private Long nextid;
+    private Long nextId;
 
-    public String getTittle() {
-        return tittle;
+    public String getTitle() {
+        return title;
     }
 
-    public void setTittle(String tittle) {
-        this.tittle = tittle == null ? null : tittle.trim();
+    public void setTitle(String title) {
+        this.title = title == null ? null : title.trim();
     }
 
-    public String getChapterpath() {
-        return chapterpath;
+    public String getChapterPath() {
+        return chapterPath;
     }
 
-    public void setChapterpath(String chapterpath) {
-        this.chapterpath = chapterpath == null ? null : chapterpath.trim();
+    public void setChapterPath(String chapterPath) {
+        this.chapterPath = chapterPath == null ? null : chapterPath.trim();
     }
 
-    public Long getPrevid() {
-        return previd;
+    public Long getPrevId() {
+        return prevId;
     }
 
-    public void setPrevid(Long previd) {
-        this.previd = previd;
+    public void setPrevId(Long prevId) {
+        this.prevId = prevId;
     }
 
-    public Long getNextid() {
-        return nextid;
+    public Long getNextId() {
+        return nextId;
     }
 
-    public void setNextid(Long nextid) {
-        this.nextid = nextid;
+    public void setNextId(Long nextId) {
+        this.nextId = nextId;
     }
 }

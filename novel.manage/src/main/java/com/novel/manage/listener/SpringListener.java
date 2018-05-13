@@ -22,11 +22,11 @@ public class SpringListener implements ApplicationListener<ContextRefreshedEvent
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
 		if (event.getApplicationContext().getParent() == null) {
-          System.out.println("初始化======================初始化");
-          List<TbNet> nets = netMapper.selectList();
-  		for (TbNet tbNet : nets) {
-  			ManageConvent.netMap.put(tbNet.getId(), tbNet);
-  		}
+	  	System.out.println("初始化======================初始化");
+	  	List<TbNet> nets = netMapper.selectList();
+		for (TbNet tbNet : nets) {
+			ManageConvent.netMap.put(tbNet.getId(), tbNet);
+		}
   		ManageConvent.mapper = mapper;
         }
 	}

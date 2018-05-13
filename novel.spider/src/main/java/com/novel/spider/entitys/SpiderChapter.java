@@ -3,72 +3,81 @@ package com.novel.spider.entitys;
 import java.util.Date;
 
 public class SpiderChapter extends SpiderChapterKey {
-    private String tittle;
+    private String title;
 
-    private String chapterpath;
+    private String chapterPath;
 
     private String cPath;
 
-    private Long previd;
+    private Long prevId;
 
-    private Long nextid;
+    private Long nextId;
 
     private Date cAddTime;
 
-     
+    private Long novelId;
 
-    public String getcPath() {
+
+    public Long getNovelId() {
+        return novelId;
+    }
+
+    public void setNovelId(Long novelId) {
+        this.novelId = novelId;
+    }
+
+    public String getCPath() {
         return cPath;
     }
 
-    public void setcPath(String cPath) {
-        this.cPath = cPath == null ? null : cPath.trim();
+    public void setCPath(String cPath) {
+        this.cPath = cPath;
     }
 
-    public String getTittle() {
-        return tittle;
+    public String getTitle() {
+        return title;
     }
 
-    public void setTittle(String tittle) {
-        this.tittle = tittle == null ? null : tittle.trim();
+    public void setTitle(String title) {
+        this.title = title == null ? null : title.trim();
     }
 
-    public String getChapterpath() {
-        return chapterpath;
+    public String getChapterPath() {
+        return chapterPath;
     }
 
-    public void setChapterpath(String chapterpath) {
-        this.chapterpath = chapterpath == null ? null : chapterpath.trim();
+    public void setChapterPath(String chapterPath) {
+        this.chapterPath = chapterPath == null ? null : chapterPath.trim();
     }
 
-    public Long getPrevid() {
-        return previd;
+    public Long getPrevId() {
+        return prevId;
     }
 
-    public void setPrevid(Long previd) {
-        this.previd = previd;
+    public void setPrevId(Long prevId) {
+        this.prevId = prevId;
     }
 
-    public Long getNextid() {
-        return nextid;
+    public Long getNextId() {
+        return nextId;
     }
 
-    public void setNextid(Long nextid) {
-        this.nextid = nextid;
+    public void setNextId(Long nextId) {
+        this.nextId = nextId;
     }
 
-    public Date getcAddTime() {
+    public Date getCAddTime() {
         return cAddTime;
     }
 
-    public void setcAddTime(Date cAddTime) {
+    public void setCAddTime(Date cAddTime) {
         this.cAddTime = cAddTime;
     }
 
 	@Override
 	public String toString() {
-		return "SpiderChapter [tittle=" + tittle + ", chapterpath=" + chapterpath + ", cPath=" + cPath + ", previd="
-				+ previd + ", nextid=" + nextid + ", cAddTime=" + cAddTime + "]";
+		return "SpiderChapter [title=" + title + ", chapterPath=" + chapterPath + ", cPath=" + cPath + ", prevId="
+				+ prevId + ", nextId=" + nextId + ", cAddTime=" + cAddTime + "]";
 	}
 
 	 

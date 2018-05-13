@@ -32,7 +32,7 @@ public class KanShuZhongNovelSpider extends AbstractNovelSpider {
 				}
 				novel.setTname(type); // 书籍类型
 				novel.setTid(getTypeIdbyName(type));
-				novel.setTittle(tds.get(1).text());
+				novel.setTitle(tds.get(1).text());
 				String netUrl = tds.get(1).getElementsByTag("a").first().absUrl("href");
 				String nameNum = netUrl.substring(0, netUrl.lastIndexOf("/"));
 				nameNum = nameNum.substring(nameNum.lastIndexOf("/") + 1);

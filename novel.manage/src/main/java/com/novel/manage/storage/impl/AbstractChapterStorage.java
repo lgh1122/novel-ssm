@@ -29,6 +29,12 @@ import com.novel.spider.util.ChapterSpiderFactory;
 import com.novel.spider.util.CommonUtil;
 import com.novel.spider.util.NovelSpiderFactory;
 
+
+/**
+ * 章节数据的更新和操作时根据书籍对象来的，在这一个不使用书籍集合进行多线程
+ * 处理，涉及多线程处理的部分可以在外部实现
+ * 同时该类也不建议操作数据库
+ */
 public abstract class AbstractChapterStorage implements ChapterProcessor {
 	protected SqlSessionFactory sqlSessionFactory;
 
@@ -60,8 +66,20 @@ public abstract class AbstractChapterStorage implements ChapterProcessor {
 		}
 		return tbNovel;
 	}
-	
-	
+
+
+	@Override
+	public Map spiderChapterUpdate(TbNovel tbNovel) {
+		SpiderNovel spiderNovel = ManageConvent.tbNovelToSpiderNovel(tbNovel);
+		IChapterSpider chapterSpider = ChapterSpiderFactory.getChapterSpider(spiderNovel.getNetUrl());
+		return null;
+	}
+
+	/**
+	 * 不用的方法
+	 * @param tbNovel
+	 */
+	@Deprecated
 	public void processChapterInsert(TbNovel tbNovel){
 		SpiderNovel spiderNovel = ManageConvent.tbNovelToSpiderNovel(tbNovel);
 		IChapterSpider chapterSpider = ChapterSpiderFactory.getChapterSpider(spiderNovel.getNetUrl());
@@ -71,22 +89,53 @@ public abstract class AbstractChapterStorage implements ChapterProcessor {
 		for (SpiderChapter spiderChapter : SpiderChapters) {
 			System.out.println(spiderChapter);
 		}
-	}
+
+		if(map == null || map.size() ==0){
+
+			System.out.println(Thread.currentThread().getName()+"小说---  疑似太监" );
+
+		}
+		if(map.size() > 0){
+
+			System.out.println(Thread.currentThread().getName()+"小说--- 正在抓取章节列表" );
+			if(map.get("novel")!=null ){
+				SpiderNovel sNovel = (SpiderNovel) map.get("novel");
+				spiderNovel.setUpdatetime(new Date());
+				//要更新的小说书籍对象
+			}
+			SpiderChapter  upChapter  = (SpiderChapter) map.get("updateChapter");
+			if(upChapter != null){
+				// 原最后一章节需要更新
+			}
+			System.out.println(upChapter);
+			List<SpiderChapter> piderChapters  = (List<SpiderChapter>) map.get("insertchapter");
+			if(SpiderChapters != null&& SpiderChapters.size() > 0){
+
+				if(SpiderChapters.size() > 50){
+					Map<String, List<SpiderChapter>> subListMap  = CommonUtil.subChapterList(SpiderChapters, 50);
+					for (Map.Entry<String, List<SpiderChapter>> entry : subListMap.entrySet()) {
+						List<SpiderChapter> childChapters =   entry.getValue() ;
+						//批量插入
+					}
+				}else{
+					//批量插入
+				}
+					//session.insert("novel.spider.mapper.SpiderChapterMapper.batchInsert", SpiderChapters);
+				}
+			}
+		}
 	
 	@Override
-	public void downImage(Configuration config, List<SpiderNovel> list) {/*
+	public void downImage(Configuration config, List<TbNovel> list) {
 		
-		//System.out.println(novelList.size());
-		
-
         // 从数据库获取要插入章节的小说集合
-		List<SpiderNovel> novelList  = list; 
+		List<TbNovel> novelList  = list;
 		if(novelList != null && novelList.size() > 0 ){
 			// 根据章节实体分配任务
 			// 根据集合来决定创建多少个线程处理任务
 			int size = config.getSize();
 			int maxThreadSize = (int) Math.ceil(novelList.size() * 1.0 / size);
-			Map<String, List<SpiderNovel>> downloadTaskAlloc = new HashMap<>();
+			Map<String, List<TbNovel>> downloadTaskAlloc = new HashMap<>();
 			for (int i = 0; i < maxThreadSize; i++) {
 				int fromIndex = i * config.getSize();
 				int toIndex = i == maxThreadSize - 1 ? novelList.size() : (i + 1) * config.getSize();
@@ -95,27 +144,27 @@ public abstract class AbstractChapterStorage implements ChapterProcessor {
 			
 			ExecutorService service = Executors.newFixedThreadPool(downloadTaskAlloc.size());
 			List<Future<String>> futures = new ArrayList<Future<String>>(downloadTaskAlloc.size());
-			for (Entry<String, List<SpiderNovel>> entry : downloadTaskAlloc.entrySet()) {
+			for (Entry<String, List<TbNovel>> entry : downloadTaskAlloc.entrySet()) {
 				final String key = entry.getKey();
-				final List<SpiderNovel> value = entry.getValue();
+				final List<TbNovel> value = entry.getValue();
 				futures.add(service.submit(new Callable<String> () {
 					public String call() throws Exception {
-						for (SpiderNovel SpiderNovel : value) {
+						for (TbNovel tbNovel : value) {
 							SqlSession session = null;
 							try {
-								String imgurl = SpiderNovel.getImgurl();
+								SpiderNovel spiderNovel = ManageConvent.tbNovelToSpiderNovel(tbNovel);
+								String imgurl = spiderNovel.getImgpath();
 								String path = "D:\\image\\image\\"+key;
-								String fileName = SpiderNovel.getId()+  imgurl.substring(imgurl.lastIndexOf("."));
+								String fileName = spiderNovel.getId()+  imgurl.substring(imgurl.lastIndexOf("."));
 							    boolean flag =	CommonUtil.writeFile(imgurl, path, fileName); 
 								if(flag){
-									session =  sqlSessionFactory.openSession();
-									SpiderNovel.setImgurl("/"+key+"/"+fileName); 
-									SpiderNovel.setUpdateTime(new Date());
-									session.update("novel.spider.mapper.SpiderNovelMapper.updateByPrimaryKeySelective", SpiderNovel);
-									session.commit();
+									//session =  sqlSessionFactory.openSession();
+									//spiderNovel.set("/"+key+"/"+fileName);
+									//spiderNovel.setUpdateTime(new Date());
+									//session.update("novel.spider.mapper.SpiderNovelMapper.updateByPrimaryKeySelective", SpiderNovel);
+									//session.commit();
 								}
 							} catch (Exception e) {
-								System.err.println(SpiderNovel.getId()+" "+SpiderNovel.getName()+"--失败" );
 								if(session != null){
 									session.rollback();
 									session.close();
@@ -132,10 +181,7 @@ public abstract class AbstractChapterStorage implements ChapterProcessor {
 					        }  
 							
 						}
-						
-						
 						return key;
-						 
 					}
 					
 				}));
@@ -150,9 +196,12 @@ public abstract class AbstractChapterStorage implements ChapterProcessor {
 			}
 			
 		}	
-	*/}
-	
-	@Override
+	}
+
+
+
+
+	/*@Override
 	public void process(Configuration config, List<SpiderNovel> list) {
 		        // 从数据库获取要插入章节的小说集合
 				List<SpiderNovel> novelList  = list; 
@@ -184,12 +233,12 @@ public abstract class AbstractChapterStorage implements ChapterProcessor {
 										Map<String, Object> map = chapterSpider.getsChapter(SpiderNovel);
 										
 										
-									/*	newTransaction = transactionFactory.newTransaction(session  
+									*//*	newTransaction = transactionFactory.newTransaction(session
 							                    .getConnection());  
-										 */
+										 *//*
 										if(map == null || map.size() ==0){
 											session =  sqlSessionFactory.openSession();
-											System.out.println(Thread.currentThread().getName()+"小说---"+SpiderNovel.getId()+" "+SpiderNovel.getTittle()+" 疑似太监" );
+											System.out.println(Thread.currentThread().getName()+"小说---"+SpiderNovel.getId()+" "+SpiderNovel.getTitle()+" 疑似太监" );
 											SpiderNovel.setIntroduction(null);
 											//SpiderNovel.setVaild((byte)4);
 											session.update("novel.spider.mapper.SpiderNovelMapper.updateByPrimaryKeySelective", SpiderNovel);
@@ -197,8 +246,8 @@ public abstract class AbstractChapterStorage implements ChapterProcessor {
 										}
 										if(map.size() > 0){
 											session =  sqlSessionFactory.openSession();
-											
-											System.out.println(Thread.currentThread().getName()+"小说---"+SpiderNovel.getId()+" "+SpiderNovel.getTittle()+" 正在抓取章节列表" );
+
+											System.out.println(Thread.currentThread().getName()+"小说---"+SpiderNovel.getId()+" "+SpiderNovel.getTitle()+" 正在抓取章节列表" );
 											if(map.get("novel")!=null ){
 												SpiderNovel spiderNovel = (SpiderNovel) map.get("novel");
 												spiderNovel.setUpdatetime(new Date());
@@ -211,22 +260,22 @@ public abstract class AbstractChapterStorage implements ChapterProcessor {
 											System.out.println(upChapter);
 											List<SpiderChapter> SpiderChapters  = (List<SpiderChapter>) map.get("insertchapter");
 											if(SpiderChapters != null&& SpiderChapters.size() > 0){
-												
+
 												if(SpiderChapters.size() > 50){
 													Map<String, List<SpiderChapter>> subListMap  = CommonUtil.subChapterList(SpiderChapters, 50);
 													 for (Map.Entry<String, List<SpiderChapter>> entry : subListMap.entrySet()) {
 														 List<SpiderChapter> childChapters =   entry.getValue() ;
 														 session.insert("novel.spider.mapper.SpiderChapterMapper.batchInsert", childChapters);
-												    } 
+												    }
 												}else{
 													 session.insert("novel.spider.mapper.SpiderChapterMapper.batchInsert", SpiderChapters);
 												}
-											}  
+											}
 											
 											session.commit();
 										}
 									} catch (Exception e) {
-										System.err.println(SpiderNovel.getId()+" "+SpiderNovel.getTittle()+"--失败" );
+										System.err.println(SpiderNovel.getId()+" "+SpiderNovel.getTitle()+"--失败" );
 										if(session != null){
 											session.rollback();
 											session.close();
@@ -246,7 +295,7 @@ public abstract class AbstractChapterStorage implements ChapterProcessor {
 								
 								
 								return key;
-								/*INovelSpider spider = NovelSpiderFactory.getNovelSpider(value);
+								*//*INovelSpider spider = NovelSpiderFactory.getNovelSpider(value);
 								Iterator<List<SpiderNovel>> iterator = spider.iterator(value, 10);
 								while (iterator.hasNext()) {
 									System.err.println("开始抓取[" + key + "] 的 URL:" + spider.next());
@@ -260,7 +309,7 @@ public abstract class AbstractChapterStorage implements ChapterProcessor {
 									session.close();
 									Thread.sleep(1_000);
 								}
-								return key;*/
+								return key;*//*
 							}
 							
 						}));
@@ -276,7 +325,7 @@ public abstract class AbstractChapterStorage implements ChapterProcessor {
 					
 				}
 		
-	}
+	}*/
 	
 	
 	

@@ -95,7 +95,7 @@ public class NovelController {
 	public EUDataGridResult gettbNovelList(@RequestParam(defaultValue = "1") Integer page,
 			@RequestParam(defaultValue = "30") Integer rows,TbNovel novel ) {
 		//TbNovel tbNovel = new TbNovel();
-		//tbNovel.setTittle(novel.get);
+		//tbNovel.setTitle(novel.get);
 		EUDataGridResult result = tbNovelService.getTbNovelList(page, rows,novel);
 		return result;
 	}
@@ -131,11 +131,11 @@ public class NovelController {
 		return "bookInfo";
 	} 
  	@RequestMapping(value="/chapter/{bookId}")
- 	public String getNovelChapterByNovelId(@PathVariable Long bookId, Model model){
+ 	public String getNovelChapterBynovelId(@PathVariable Long bookId, Model model){
  		//根据书籍ID查看书籍信息
  		 
  		long start = System.currentTimeMillis();
- 		List<TbChapter> chapters = chapterService.getChaptersByNovelId(bookId);
+ 		List<TbChapter> chapters = chapterService.getChaptersBynovelId(bookId);
  		long middle = System.currentTimeMillis();
  		TbNovel novel = novelService.selectNovelInfoByKey(bookId); 
  		long end = System.currentTimeMillis();
@@ -157,7 +157,7 @@ public class NovelController {
  	} 
 	
  	@RequestMapping(value="/chapter/{bookId}/{chapterId}")
- 	public String getChapterDatilByNovelId(@PathVariable Long bookId,@PathVariable Long chapterId, Model model){
+ 	public String getChapterDatilBynovelId(@PathVariable Long bookId,@PathVariable Long chapterId, Model model){
  		//编号获取章节内容
  		TbChapter chapter = chapterService.getChaptersById(bookId, chapterId); 
 		ChapterDetail cd = chapterService.getChaptersDetailById(bookId,chapterId);

@@ -28,6 +28,8 @@ public class TbNovelServiceImpl implements TbNovelService {
 
 	}
 
+
+
 	@Override
 	public int insertOrupdateTbNovel(TbNovel tbNovel) {
 		TbNovel oldNovel = novelMapper.selectByPrimaryKey(tbNovel);
@@ -50,8 +52,8 @@ public class TbNovelServiceImpl implements TbNovelService {
 		// 分页处理
 		PageHelper.startPage(page, rows);
 		Criteria criteria = example.createCriteria();
-		if(tbNovel.getTittle() !=null && !"".equals(tbNovel.getTittle())){
-			criteria.andTittleLike("%"+tbNovel.getTittle()+"%");
+		if(tbNovel.getTitle() !=null && !"".equals(tbNovel.getTitle())){
+			criteria.andtitleLike("%"+tbNovel.getTitle()+"%");
 		}
 		
 		if(tbNovel.getAuthor() !=null && !"".equals(tbNovel.getAuthor())){
@@ -85,4 +87,9 @@ public class TbNovelServiceImpl implements TbNovelService {
 		novelMapper.updateByPrimaryKeySelective(tbNovel);
 	}
 
+    @Override
+    public int insertTbNovel(TbNovel tbNovel) {
+	    return novelMapper.insert(tbNovel);
+
+    }
 }

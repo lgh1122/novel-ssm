@@ -17,7 +17,7 @@
 	        <tr>
 	            <td>书籍标题:</td>
 
-	            <td><h3 style="text-align: left; color: red;">${tbNovel.tittle} </h3> </td>
+	            <td><h3 style="text-align: left; color: red;">${tbNovel.title} </h3> </td>
 	        </tr>
 	        <tr>
 	            <td>书籍作者:</td>

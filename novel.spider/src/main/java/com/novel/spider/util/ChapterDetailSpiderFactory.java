@@ -20,7 +20,7 @@ public final class ChapterDetailSpiderFactory {
 		case Kanshuzhong :
 		case XBXWX :
 		case BXWX :	
-		case SANHAO:
+
 			spider = new DefaultChapterDetailSpider();
 			break;
 		}

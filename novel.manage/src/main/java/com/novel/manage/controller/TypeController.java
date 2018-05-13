@@ -26,7 +26,7 @@ public class TypeController {
 	@ResponseBody
 	public List<EUTreeNode> gettbTypeList() {
 		//TbNovel tbNovel = new TbNovel();
-		//tbNovel.setTittle(novel.get);
+		//tbNovel.setTitle(novel.get);
 		List<EUTreeNode> result = tbTypeService.getTbTypeList();
 		return result;
 	}

@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.novel.common.pojo.TbChapter;
+import com.novel.spider.entitys.SpiderChapter;
 import org.dozer.Mapper;
 
 import com.novel.common.pojo.TbNet;
@@ -33,7 +35,7 @@ public class ManageConvent {
 	}
 	/**
 	 * spiderNovel 集合 转换成 TbNovel 集合
-	 * @param spiderNovel
+	 * @param spidernovels
 	 * @return
 	 */
 	public static List<TbNovel> spiderToTbNovelList(List<SpiderNovel> spidernovels){
@@ -69,7 +71,7 @@ public class ManageConvent {
 	
 	/**
 	 * spiderNovel 转换成 TbNovel
-	 * @param spiderNovel
+	 * @param tbNovel
 	 * @return
 	 */
 	public static SpiderNovel tbNovelToSpiderNovel(TbNovel tbNovel ){
@@ -82,6 +84,78 @@ public class ManageConvent {
 		spiderNovel.setNetUrl(net.getNovelurl().replace("${novelurl}", tbNovel.getId()+""));
 		return spiderNovel;
 	}
-	
-	
+
+
+	/**
+	 * SpiderChapter 转换成 TbChapter
+	 * @param spiderChapter
+	 * @return
+	 */
+	public static TbChapter spiderToTbChapter(SpiderChapter spiderChapter){
+		TbChapter tbChapter = mapper.map(spiderChapter, TbChapter.class);
+
+		TbNet net = getTbNetfromMap(spiderChapter.getChapterPath());
+		/*if(spiderNovel.getImgpath() != null){
+			tbNovel.setImgpath(spiderNovel.getImgpath().replace(net.getFullurl(), ""));
+		}*/
+		tbChapter.setNetid(net.getId());
+		tbChapter.setChapterPath(null);
+		return tbChapter;
+	}
+	/**
+	 * spiderChapters 集合 转换成 TbChapter 集合
+	 * @param spiderChapters
+	 * @return
+	 */
+	public static List<TbChapter> spiderToTbChapterList(List<SpiderChapter> spiderChapters){
+		List<TbChapter> tbChapters = new ArrayList<TbChapter>();
+		if(spiderChapters == null || spiderChapters.size()==0){
+			return null;
+		}
+		TbNet net = getTbNetfromMap(spiderChapters.get(0).getChapterPath());
+		for (SpiderChapter spiderChapter : spiderChapters) {
+			TbChapter tbChapter = mapper.map(spiderChapter, TbChapter.class);
+			tbChapter.setNetid(net.getId());
+			tbChapter.setChapterPath(null);
+			tbChapters.add(tbChapter);
+		}
+		return tbChapters;
+	}
+
+
+	/**
+	 * TbChapter 转换成 SpiderChapter
+	 * @param chapter
+	 * @return
+	 */
+	public static SpiderChapter tbChapterToSpiderChapter(TbChapter chapter ){
+		SpiderChapter spiderChapter = mapper.map(chapter, SpiderChapter.class);
+		//NovelSiteEnum siteenum =  NovelSiteEnum.getEnumById(Long.bitCount( (tbNovel.getNetid())));
+		TbNet net = netMap.get(chapter.getNetid());
+		spiderChapter.setChapterPath(net.getChapterinfourl().replace("${novelurl}",chapter.getNovelId()+"")
+				.replace("${chapterurl}",chapter.getId()+""));
+		return spiderChapter;
+	}
+
+	/**
+	 *  TbChapter集合 转换成 spiderChapters  集合
+	 * @param chapters
+	 * @return
+	 */
+	public static List<SpiderChapter> chapterToSpilderChapterList(List<TbChapter> chapters){
+		List<SpiderChapter> spiderChapters = new ArrayList<SpiderChapter>();
+		if(chapters == null || chapters.size()==0){
+			return null;
+		}
+		TbNet net = getTbNetfromMap(chapters.get(0).getChapterPath());
+		for (TbChapter tbChapter : chapters) {
+			SpiderChapter spiderChapter1 = mapper.map(tbChapter, SpiderChapter.class);
+			spiderChapter1.setChapterPath(net.getChapterinfourl().replace("${novelurl}",tbChapter.getNovelId()+"")
+					.replace("${chapterurl}",tbChapter.getId()+""));
+			spiderChapters.add(spiderChapter1);
+		}
+		return spiderChapters;
+	}
+
+
 }

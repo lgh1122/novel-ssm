@@ -3,7 +3,7 @@ package com.novel.common.pojo;
 public class TbChapterKey {
     private Long id;
 
-    private Long novelid;
+    private Long novelId;
 
     private Long netid;
 
@@ -15,12 +15,12 @@ public class TbChapterKey {
         this.id = id;
     }
 
-    public Long getNovelid() {
-        return novelid;
+    public Long getNovelId() {
+        return novelId;
     }
 
-    public void setNovelid(Long novelid) {
-        this.novelid = novelid;
+    public void setNovelId(Long novelId) {
+        this.novelId = novelId;
     }
 
     public Long getNetid() {

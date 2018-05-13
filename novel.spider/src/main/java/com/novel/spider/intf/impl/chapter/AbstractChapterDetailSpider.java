@@ -31,8 +31,8 @@ public abstract class AbstractChapterDetailSpider extends AbstractSpider impleme
 			splits = parseSelector(splits);
 			//System.out.println(titleSector+" "+splits[0] +" " + splits[1]);
 			SpiderChapterDetail detail = new SpiderChapterDetail();
-			Elements tittleE = doc.select(splits[0]);
-			String title = tittleE.get(Integer.parseInt(splits[1])).text();
+			Elements titleE = doc.select(splits[0]);
+			String title = titleE.get(Integer.parseInt(splits[1])).text();
 			detail.setTitle(title);
 			// 拿章节内容
 			String contentSector = contexts.get("chapter-detail-content-selector");

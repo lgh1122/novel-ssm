@@ -2,6 +2,7 @@ package com.novel.common.mapper;
 
 import java.util.List;
 
+import com.novel.common.pojo.TbNovel;
 import org.apache.ibatis.annotations.Param;
 
 import com.novel.common.pojo.TbChapter;
@@ -30,4 +31,6 @@ public interface TbChapterMapper {
     int updateByPrimaryKeySelective(TbChapter record);
 
     int updateByPrimaryKey(TbChapter record);
+
+    void batchInsert(List<TbChapter> list);
 }

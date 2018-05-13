@@ -214,7 +214,7 @@ public class Testcase {/*
 		IChapterSpider chapterSpider = ChapterSpiderFactory.getChapterSpider("http://www.kanshuzhong.com/book/118665/");
 		SpiderNovel novel = new SpiderNovel();
 		novel.setId(119319L);
-		novel.setTittle("逆袭大清");
+		novel.setTitle("逆袭大清");
 		novel.setNetUrl("http://www.kanshuzhong.com/book/119319/");
 		Map<String, Object> map = chapterSpider.getsChapter(novel);
 		novel = (SpiderNovel) map.get("novel");

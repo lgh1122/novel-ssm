@@ -17,4 +17,5 @@ public interface TbNovelService {
 
 	public void updateTbNovel(TbNovel tbNovel);
 
+	public int insertTbNovel(TbNovel tbNovel);
 }

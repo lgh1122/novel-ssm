@@ -40,7 +40,7 @@ public class ManageTest extends BaseJunitTest {
 	    public void testNotSameAttributeMapping() {
 		    SpiderNovel novel = new SpiderNovel();
 			novel.setId(119319L);
-			novel.setTittle("逆袭大清");
+			novel.setTitle("逆袭大清");
 			novel.setStatus((byte)2);
 			novel.setNetUrl("http://www.kanshuzhong.com/book/119319/");
 			TbNovel desc = mapper.map(novel, TbNovel.class);
@@ -51,7 +51,7 @@ public class ManageTest extends BaseJunitTest {
 	 public void testMapping() {
 		 SpiderNovel novel = new SpiderNovel();
 		 novel.setId(119319L);
-		 novel.setTittle("逆袭大清");
+		 novel.setTitle("逆袭大清");
 		 novel.setStatus((byte)2);
 		 novel.setNetUrl("http://www.kanshuzhong.com/book/119319/");
 		 TbNovel desc =  ManageConvent.spiderToTbNovel(novel);
@@ -65,7 +65,7 @@ public class ManageTest extends BaseJunitTest {
 	    public void testNotSameAttributeMapping2() {
 		    TbNovel novel = new TbNovel();
 			novel.setId(119319L);
-			novel.setTittle("逆袭大清");
+			novel.setTitle("逆袭大清");
 			novel.setStatus((byte)2);
 			 
 			SpiderNovel desc = mapper.map(novel, SpiderNovel.class);
@@ -80,7 +80,7 @@ public class ManageTest extends BaseJunitTest {
 		 try{
 			 TbNovel novel = new TbNovel();
 				novel.setId(119319L);
-				novel.setTittle("逆袭大清");
+				novel.setTitle("逆袭大清");
 				novel.setStatus((byte)2);
 				novel.setNetid(3L);
 				SpiderNovel desc = ManageConvent.tbNovelToSpiderNovel(novel);
@@ -203,7 +203,7 @@ public class ManageTest extends BaseJunitTest {
 			 processor = new KanShuZhongChapterStorageImpl();
 			 TbNovel novel = new TbNovel();
 				novel.setId(119319L);
-				novel.setTittle("逆袭大清");
+				novel.setTitle("逆袭大清");
 				novel.setStatus((byte)2);
 				novel.setNetid(3L);
 			 processor.processChapterInsert(novel);
