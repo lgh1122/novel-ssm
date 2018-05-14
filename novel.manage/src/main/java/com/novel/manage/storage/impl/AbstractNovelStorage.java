@@ -130,7 +130,7 @@ public abstract class AbstractNovelStorage implements NovelProcessor {
 											//两者章节信息不同，说明存在章节信息更新
 											//需要对数据进行更新操作
 											System.out.println(oldNovel.getIshaschapter());
-
+											// 值为null时 null ==1 会报空指针异常
 											if( oldNovel.getIshaschapter()!=null && oldNovel.getIshaschapter() == 1){
 												//											进行章节列表的更新
 												SpiderNovel spiderNovel = ManageConvent.tbNovelToSpiderNovel(oldNovel);
