@@ -2,7 +2,7 @@
 
 
 <table class="easyui-datagrid" id="itemList" title="任务列表"
-       data-options="singleSelect:false,collapsible:true,pagination:true,url:'/task/list',method:'get',pageSize:30,toolbar:toolbar">
+       data-options="singleSelect:false,collapsible:true,pagination:true,url:'task/list',method:'get',pageSize:30,toolbar:toolbar">
     <thead>
     <tr>
         <th data-options="field:'ck',checkbox:true"></th>

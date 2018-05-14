@@ -138,6 +138,7 @@ public class NovelController {
                 }
 			} catch (Exception e) {
 				e.printStackTrace();
+				logger.error(e.getMessage());
                 return JsonResult.build(500,"获取书籍详情失败，请重新请求");
 			}
 		}

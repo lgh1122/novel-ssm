@@ -131,7 +131,7 @@ public abstract class AbstractNovelStorage implements NovelProcessor {
 											//需要对数据进行更新操作
 											System.out.println(oldNovel.getIshaschapter());
 
-											if( oldNovel.getIshaschapter() == 1){
+											if( oldNovel.getIshaschapter()!=null && oldNovel.getIshaschapter() == 1){
 												//											进行章节列表的更新
 												SpiderNovel spiderNovel = ManageConvent.tbNovelToSpiderNovel(oldNovel);
 												IChapterSpider chapterSpider = ChapterSpiderFactory.getChapterSpider(spiderNovel.getNetUrl());
@@ -183,6 +183,7 @@ public abstract class AbstractNovelStorage implements NovelProcessor {
 									}
 								}catch (Exception e){
 									logger.error("小说"+tbNovel.getId() +"--"+tbNovel.getTitle() +"爬取失败");
+									logger.error(e.getMessage());
 									e.printStackTrace();
 								}
 							}

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <table class="easyui-datagrid" id="itemList" title="书籍列表" 
-       data-options="singleSelect:false,collapsible:true,pagination:true,url:'/novel/list',method:'post',pageSize:30,toolbar:easyui_toolbar">
+       data-options="singleSelect:false,collapsible:true,pagination:true,url:'novel/list',method:'post',pageSize:30,toolbar:easyui_toolbar">
     <thead>
         <tr>
         	<th data-options="field:'ck',checkbox:true"></th>
@@ -64,7 +64,7 @@ function constructionManager(id,netId){
 	if(tab){
 		tabs.tabs("add",{
 		    title:"书籍详情",
-		    href: '/novel-info/'+netId+'/'+id,
+		    href: 'novel-info/'+netId+'/'+id,
 		    closable:true,
 		    bodyCls:"content"
 		});

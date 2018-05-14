@@ -78,7 +78,7 @@
         	$.messager.confirm('确认','确定执行ID为 '+ids+' 的任务吗？',function(r){
         	    if (r){
         	    	var params = {"id":ids};
-                	$.post("/novel/spider",params, function(data){
+                	$.post("novel/spider",params, function(data){
             			//if(data.status == 200){
             				$.messager.alert('提示', data);
             			//}
