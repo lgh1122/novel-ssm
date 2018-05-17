@@ -1,15 +1,20 @@
 package com.novel.rest.controller;
 
 import com.novel.common.pojo.TbChapter;
+import com.novel.common.pojo.TbChapterKey;
 import com.novel.common.pojo.TbNovel;
 import com.novel.common.util.EUDataGridResult;
 import com.novel.common.util.JsonResult;
 import com.novel.rest.converter.ManageConvent;
 import com.novel.rest.service.TbChapterService;
 import com.novel.rest.service.TbNovelService;
+import com.novel.rest.util.FileIoUtil;
 import com.novel.spider.entitys.SpiderChapter;
+import com.novel.spider.entitys.SpiderChapterDetail;
 import com.novel.spider.entitys.SpiderNovel;
+import com.novel.spider.intf.IChapterDetailSpider;
 import com.novel.spider.intf.IChapterSpider;
+import com.novel.spider.util.ChapterDetailSpiderFactory;
 import com.novel.spider.util.ChapterSpiderFactory;
 import com.novel.spider.util.CommonUtil;
 import org.apache.log4j.Logger;
@@ -21,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Map;
@@ -48,13 +54,7 @@ public class ChapterController {
      ChapterList 章节信息，用户点击现在阅读时进入书籍章节目录界面
      ChapterContent 章节内容 ，返回章节的具体内容，可将内容缓存1天 redis
      */
-    /**
-     *
-     * @param page 当前页
-     * @param rows 每页多少数据
-     * @param novel 请求参数
-     * @return
-     */
+
    /* @RequestMapping(value = "/list")
     @ResponseBody
     public EUDataGridResult gettbNovelList(@RequestParam(value="page",defaultValue = "1") int page,
@@ -73,10 +73,10 @@ public class ChapterController {
     }*/
 
 
-    @RequestMapping("/chapterlist/{netId}/{id}")
+    @RequestMapping("/chapterlist/{netId}/{novelId}")
     @ResponseBody
-    public JsonResult getChapterListByNovelId(@PathVariable long netId, @PathVariable long id){
-        List<TbChapter> chapters = tbChapterService.getChapterList(netId,id);
+    public JsonResult getChapterListByNovelId(@PathVariable long netId, @PathVariable long novelId){
+        List<TbChapter> chapters = tbChapterService.getChapterList(netId,novelId);
 
         if(chapters!=null && chapters.size() > 0 ){
             return JsonResult.ok(chapters);
@@ -86,6 +86,29 @@ public class ChapterController {
 
     }
 
+    @RequestMapping("/content/{netId}/{novelId}/{chapterId}")
+    @ResponseBody
+    public JsonResult getChaptersDetailById(@PathVariable long netId,@PathVariable long novelId,@PathVariable long chapterId) {
+
+        TbChapter tbChapter = tbChapterService.getTbChapter(netId,novelId,chapterId);
+        SpiderChapter spiderChapter =  ManageConvent.tbChapterToSpiderChapter(tbChapter);
+
+        String path =  "D:/4/novel/"+spiderChapter.getNetid()+"/"+spiderChapter.getNovelId()+"/";
+        String filePath =path +spiderChapter.getId()+".txt";
+        File chapterFile = new File(filePath);
+        if(chapterFile.exists()){
+            String content = FileIoUtil.readFile(filePath, "UTF-8");
+            spiderChapter.setContent(content);
+
+        }else{
+            IChapterDetailSpider spider = ChapterDetailSpiderFactory.getChapterDetailSpider(spiderChapter.getChapterPath());
+            SpiderChapterDetail cd  = spider.getChapterDetail(spiderChapter.getChapterPath());
+            spiderChapter.setContent(cd.getContent());
+            FileIoUtil.uploadFile(cd.getContent(),path,spiderChapter.getId()+".txt", "UTF-8");
+        }
+
+        return JsonResult.ok(spiderChapter);
+    }
 
    /* @RequestMapping("/desc/{netId}/{id}")
     @ResponseBody

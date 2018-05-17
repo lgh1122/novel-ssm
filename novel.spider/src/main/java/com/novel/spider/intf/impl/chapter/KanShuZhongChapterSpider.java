@@ -96,7 +96,7 @@ public class KanShuZhongChapterSpider extends  AbstractChapterSpider {
 					continue;
 				}
 				chapter.setNovelId(novel.getId());
-				chapter.setCAddTime(new Date());
+
 				
 				// 获取下一章节ID
 				if(i < size - 1){

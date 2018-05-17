@@ -1,8 +1,10 @@
 package com.novel.spider.entitys;
 
-import java.util.Date;
+public class SpiderChapter   {
+    private Long id;
+    private Long novelId;
+    private Long netid;
 
-public class SpiderChapter extends SpiderChapterKey {
     private String title;
 
     private String chapterPath;
@@ -13,10 +15,25 @@ public class SpiderChapter extends SpiderChapterKey {
 
     private Long nextId;
 
-    private Date cAddTime;
 
-    private Long novelId;
+    private String content;
 
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Long getNovelId() {
         return novelId;
@@ -26,13 +43,23 @@ public class SpiderChapter extends SpiderChapterKey {
         this.novelId = novelId;
     }
 
-    public String getCPath() {
+    public Long getNetid() {
+        return netid;
+    }
+
+    public void setNetid(Long netid) {
+        this.netid = netid;
+    }
+
+    public String getcPath() {
         return cPath;
     }
 
-    public void setCPath(String cPath) {
+    public void setcPath(String cPath) {
         this.cPath = cPath;
     }
+
+
 
     public String getTitle() {
         return title;
@@ -66,18 +93,14 @@ public class SpiderChapter extends SpiderChapterKey {
         this.nextId = nextId;
     }
 
-    public Date getCAddTime() {
-        return cAddTime;
-    }
 
-    public void setCAddTime(Date cAddTime) {
-        this.cAddTime = cAddTime;
-    }
+
+
 
 	@Override
 	public String toString() {
 		return "SpiderChapter [title=" + title + ", chapterPath=" + chapterPath + ", cPath=" + cPath + ", prevId="
-				+ prevId + ", nextId=" + nextId + ", cAddTime=" + cAddTime + "]";
+				+ prevId + ", nextId=" + nextId + "]";
 	}
 
 	 

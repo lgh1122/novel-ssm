@@ -2,6 +2,7 @@ package com.novel.spider.intf.impl.chapter;
 
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -14,7 +15,7 @@ import com.novel.spider.intf.impl.AbstractSpider;
 import com.novel.spider.util.NovelSpiderUtil;
 
 public abstract class AbstractChapterDetailSpider extends AbstractSpider implements IChapterDetailSpider {
-
+	private static Logger logger = Logger.getLogger(AbstractChapterDetailSpider.class);
 	@Override
 	public SpiderChapterDetail getChapterDetail(String url) {
 		try {
@@ -59,7 +60,8 @@ public abstract class AbstractChapterDetailSpider extends AbstractSpider impleme
 			detail.setNext(doc.select(splits[0]).get(Integer.parseInt(splits[1])).absUrl("href"));
 			return detail;
 		} catch (Exception e) {
-			System.err.println("获取章节内容失败");
+			logger.error("---抓取 "+url+"小说章节信息结束---");
+
 			e.printStackTrace();
 		}
 

@@ -42,7 +42,12 @@ public class TbChapterServiceImpl implements TbChapterService {
 
 	@Override
 	public TbChapter getTbChapter(long netId, long novelId, long chapterId) {
-		return null;
+		TbChapterKey key = new TbChapterKey();
+		key.setId(chapterId);
+		key.setNetid(netId);
+		key.setNovelId(novelId);
+		return chapterMapper.selectByPrimaryKey(key);
+
 	}
 
 	@Override
