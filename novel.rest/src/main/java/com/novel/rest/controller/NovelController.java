@@ -90,7 +90,8 @@ public class NovelController {
         TbNovel tbNovel = tbNovelService.getNovelDescByID(netId,id);
         //model.addAttribute("tbNovel", tbNovel);
 		 if(tbNovel!=null && tbNovel.getIntroduction()!=null && !"".equals(tbNovel.getIntroduction())&& tbNovel.getIshaschapter() == 1){
-		     return JsonResult.ok(tbNovel);
+			 SpiderNovel spiderNovel = ManageConvent.tbNovelToSpiderNovel(tbNovel);
+			 return JsonResult.ok(spiderNovel);
 		}else{
 			try {
                 SpiderNovel spiderNovel = ManageConvent.tbNovelToSpiderNovel(tbNovel);
@@ -142,7 +143,8 @@ public class NovelController {
                 return JsonResult.build(500,"获取书籍详情失败，请重新请求");
 			}
 		}
-        return JsonResult.ok(tbNovel);
+		SpiderNovel spiderNovel = ManageConvent.tbNovelToSpiderNovel(tbNovel);
+        return JsonResult.ok(spiderNovel);
     }
 
 

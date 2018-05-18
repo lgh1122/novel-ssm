@@ -18,9 +18,9 @@
   <class-a>com.novel.common.pojo.TbNovel</class-a>
   <class-b>com.novel.spider.entitys.SpiderNovel</class-b>   
     <!-- 排除属性  裁剪字符串开关trim-strings -->
-	<field-exclude>
+	<!-- <field-exclude>
       <a>imgpath</a>
       <b>imgpath</b>
-    </field-exclude>
+    </field-exclude> -->
 </mapping>
 </mappings>
