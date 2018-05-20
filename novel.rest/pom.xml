@@ -15,6 +15,7 @@
 		<dependency>
             <groupId>com.qcloud</groupId>
             <artifactId>cos_api</artifactId>
+            <version>5.2.4</version>
 		</dependency>
         <dependency>
             <groupId>org.quartz-scheduler</groupId>
@@ -89,14 +90,14 @@
             <scope>provided</scope>
         </dependency>
         <!-- 文件上传组件 -->
-        <dependency>
-            <groupId>commons-fileupload</groupId>
-            <artifactId>commons-fileupload</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-        </dependency>
+         <dependency>
+              <groupId>commons-fileupload</groupId>
+              <artifactId>commons-fileupload</artifactId>
+          </dependency>
+        <!--   <dependency>
+              <groupId>commons-io</groupId>
+              <artifactId>commons-io</artifactId>
+          </dependency>-->
         <!-- 连接池 -->
         <dependency>
             <groupId>com.alibaba</groupId>
@@ -129,7 +130,11 @@
             <version>1.7.7</version>
         </dependency>
 
-
+        <!-- solr客户端 -->
+        <dependency>
+            <groupId>org.apache.solr</groupId>
+            <artifactId>solr-solrj</artifactId>
+        </dependency>
     </dependencies>
 
 

@@ -98,6 +98,14 @@
       order by ${orderByClause}
     </if>
   </select>
+  <select id="selectByUpdateTime" resultMap="BaseResultMap"  >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_novel  WHERE updatetime > SUBDATE(NOW(),INTERVAL 1 HOUR);
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.novel.common.pojo.TbNovelKey" >
     select 
     <include refid="Base_Column_List" />

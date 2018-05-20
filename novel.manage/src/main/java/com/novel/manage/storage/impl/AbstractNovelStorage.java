@@ -9,13 +9,12 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import com.novel.common.pojo.TbChapter;
+import com.novel.manage.service.SearchService;
 import com.novel.manage.service.TbChapterService;
 import com.novel.spider.entitys.SpiderChapter;
 import com.novel.spider.intf.IChapterSpider;
 import com.novel.spider.util.ChapterSpiderFactory;
 import com.novel.spider.util.CommonUtil;
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -41,6 +40,8 @@ public abstract class AbstractNovelStorage implements NovelProcessor {
 	private TbChapterService tbChapterService;
 	@Autowired
 	private TbNovelService tbNovelService;
+	@Autowired
+	private SearchService searchService;
 	
 
 
@@ -65,11 +66,10 @@ public abstract class AbstractNovelStorage implements NovelProcessor {
 					Iterator<List<SpiderNovel>> iterator = spider.iterator(value, 10);
 					int k = 0;
 					while (iterator.hasNext()) {
-						 
 						k++;
 						try {
 							 
-							System.err.println("开始抓取[" + key + "] 的 URL:" + spider.next());
+							System.err.println("现在开始抓取[" + key + "] 的 URL:" + spider.next());
 							List<SpiderNovel> novels = iterator.next();
 							List<TbNovel> tbNovels = ManageConvent.spiderToTbNovelList(novels);
 							tbNovelService = (TbNovelService) ServiceLocator.getService("tbNovelService");
@@ -204,10 +204,14 @@ public abstract class AbstractNovelStorage implements NovelProcessor {
 		for (Future<String> future : futures) {
 			try {
 				System.out.println("抓取[" + future.get() + "]结束！");
+
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
+		searchService = (SearchService) ServiceLocator.getService("searchService");
+		// 导入索引库
+		searchService.importItems();
 	}
 	
 	

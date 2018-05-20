@@ -19,6 +19,8 @@ public interface TbNovelMapper {
 
     List<TbNovel> selectByExample(TbNovelExample example);
 
+    List<TbNovel> selectByUpdateTime( );
+
     TbNovel selectByPrimaryKey(TbNovelKey key);
 
     int updateByExampleSelective(@Param("record") TbNovel record, @Param("example") TbNovelExample example);

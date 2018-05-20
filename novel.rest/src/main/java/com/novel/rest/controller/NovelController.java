@@ -3,29 +3,25 @@ package com.novel.rest.controller;
 import com.novel.common.pojo.TbChapter;
 import com.novel.common.pojo.TbNovel;
 import com.novel.common.util.EUDataGridResult;
+import com.novel.common.util.ExceptionUtil;
 import com.novel.common.util.JsonResult;
+import com.novel.common.util.SearchResult;
 import com.novel.rest.converter.ManageConvent;
+import com.novel.rest.service.SearchService;
 import com.novel.rest.service.TbChapterService;
 import com.novel.rest.service.TbNovelService;
-import com.novel.rest.storage.ChapterProcessor;
-import com.novel.rest.storage.impl.KanShuZhongChapterStorageImpl;
-import com.novel.rest.storage.impl.KanShuZhongNovelStorageImpl;
-import com.novel.spider.entitys.SpiderChapter;
+   import com.novel.spider.entitys.SpiderChapter;
 import com.novel.spider.entitys.SpiderNovel;
 import com.novel.spider.intf.IChapterSpider;
 import com.novel.spider.util.ChapterSpiderFactory;
 import com.novel.spider.util.CommonUtil;
-import org.apache.http.HttpRequest;
-import org.apache.log4j.Logger;
+import org.apache.commons.lang3.StringUtils;
+ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+ import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
+ import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Map;
@@ -47,6 +43,9 @@ public class NovelController {
     private TbNovelService tbNovelService;
     @Autowired
     private TbChapterService tbChapterService;
+
+    @Autowired
+    private SearchService searchService;
 
     /**
      NovelController
@@ -84,15 +83,50 @@ public class NovelController {
     }
 
 
+    @RequestMapping(value = "/query")
+    @ResponseBody
+    public JsonResult search(@RequestParam("q") String queryString, @RequestParam(defaultValue = "1") Integer page,
+                               @RequestParam(defaultValue = "20") Integer rows, HttpServletRequest request) {
+        //查询条件不能为空
+        if (StringUtils.isBlank(queryString)) {
+            return JsonResult.build(400, "查询条件不能为空");
+        }
+        SearchResult searchResult = null;
+        try {
+
+            if("GET".equalsIgnoreCase( request.getMethod())){
+                if(queryString!=null){
+                    queryString = new String(queryString.getBytes("ISO-8859-1"),"UTF-8");
+                }
+            }
+
+            searchResult = searchService.searchNovels(queryString,page,rows);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return JsonResult.build(500, ExceptionUtil.getStackTrace(e));
+        }
+        return JsonResult.ok(searchResult);
+    }
+    /**
+     * 导入书籍数据到索引库
+     * @return
+     */
+    @RequestMapping("/importNovel")
+    @ResponseBody
+    public JsonResult importAllItems(){
+        //searchService.importItems()
+        return JsonResult.ok();
+    }
+
     @RequestMapping("/info/{netId}/{id}")
     @ResponseBody
     public JsonResult getNovelInfoById(@PathVariable long netId, @PathVariable long id){
         TbNovel tbNovel = tbNovelService.getNovelDescByID(netId,id);
         //model.addAttribute("tbNovel", tbNovel);
-		 if(tbNovel!=null && tbNovel.getIntroduction()!=null && !"".equals(tbNovel.getIntroduction())&& tbNovel.getIshaschapter() == 1){
+		 if(tbNovel!=null && tbNovel.getIntroduction()!=null && !"".equals(tbNovel.getIntroduction())&&tbNovel.getIshaschapter()!=null && tbNovel.getIshaschapter() == 1){
 			 SpiderNovel spiderNovel = ManageConvent.tbNovelToSpiderNovel(tbNovel);
 			 return JsonResult.ok(spiderNovel);
-		}else{
+		  }else{
 			try {
                 SpiderNovel spiderNovel = ManageConvent.tbNovelToSpiderNovel(tbNovel);
                 spiderNovel.setLatestchapterid(null);
@@ -142,9 +176,13 @@ public class NovelController {
 				logger.error(e.getMessage());
                 return JsonResult.build(500,"获取书籍详情失败，请重新请求");
 			}
+             SpiderNovel spiderNovel = ManageConvent.tbNovelToSpiderNovel(tbNovel);
+             // 更新完小说后，更新solr索引库
+             searchService.addSolrDoc(spiderNovel);
+             return JsonResult.ok(spiderNovel);
 		}
-		SpiderNovel spiderNovel = ManageConvent.tbNovelToSpiderNovel(tbNovel);
-        return JsonResult.ok(spiderNovel);
+
+
     }
 
 
