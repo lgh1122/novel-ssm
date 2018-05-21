@@ -79,7 +79,7 @@ public class ManageConvent {
 		//NovelSiteEnum siteenum =  NovelSiteEnum.getEnumById(Long.bitCount( (tbNovel.getNetid())));
 		TbNet net = netMap.get(tbNovel.getNetid());
 		if(tbNovel.getImgpath() != null){
-			spiderNovel.setImgpath(net.getFullurl()+spiderNovel.getImgpath());
+			spiderNovel.setImgpath(net.getFullurl()+tbNovel.getImgpath());
 		}
 		spiderNovel.setNetUrl(net.getNovelurl().replace("${novelurl}", tbNovel.getId()+""));
 		return spiderNovel;

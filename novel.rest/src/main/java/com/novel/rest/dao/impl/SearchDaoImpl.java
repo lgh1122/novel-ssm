@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.novel.common.util.SearchResult;
-import com.novel.rest.dao.SearchDao;
-import com.novel.spider.entitys.SpiderNovel;
+import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
@@ -16,10 +14,15 @@ import org.apache.solr.common.SolrDocumentList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.novel.common.util.SearchResult;
+import com.novel.rest.dao.SearchDao;
+import com.novel.spider.entitys.SpiderNovel;
+
 
 
 @Repository
 public class SearchDaoImpl implements SearchDao {
+	public static Logger logger = Logger.getLogger(SearchDaoImpl.class);
 
 	@Autowired
 	private SolrServer solrServer;
@@ -62,6 +65,8 @@ public class SearchDaoImpl implements SearchDao {
 			list.add(item);
 			}
 	    result.setItemList(list);
+	    logger.error("通过solr搜索到的书籍总数量为："+result.getRecordCount());
+	    logger.error("通过solr搜索到的书籍数量为："+result.getRecordCount());
 		return result;
 	}
 

@@ -8,6 +8,7 @@ import com.novel.common.pojo.TbNovelExample;
 import com.novel.common.pojo.TbNovelExample.Criteria;
 import com.novel.common.pojo.TbNovelKey;
 import com.novel.common.util.EUDataGridResult;
+import com.novel.common.util.SearchResult;
 import com.novel.rest.converter.ManageConvent;
 import com.novel.rest.service.TbNovelService;
 import com.novel.spider.entitys.SpiderNovel;
@@ -35,7 +36,8 @@ public class TbNovelServiceImpl implements TbNovelService {
 
 	// 书籍列表实现
 	@Override
-	public EUDataGridResult getTbNovelList(Integer page, Integer rows,TbNovel tbNovel) {
+	public SearchResult getTbNovelList(Integer page, Integer rows,TbNovel tbNovel) {
+		SearchResult<SpiderNovel> searchResult= new SearchResult<>();
 		TbNovelExample example = new TbNovelExample();
 		// 分页处理
 		PageHelper.startPage(page, rows);
@@ -54,8 +56,9 @@ public class TbNovelServiceImpl implements TbNovelService {
 		result.setRows(spiderNovels);
 		// 取记录总条数
 		PageInfo<TbNovel> pageInfo = new PageInfo<>(list);
-		result.setTotal(pageInfo.getTotal());
-		return result;
+		searchResult.setItemList(spiderNovels); 
+		searchResult.setRecordCount(pageInfo.getTotal());
+		return searchResult;
 	}
 
 	@Override

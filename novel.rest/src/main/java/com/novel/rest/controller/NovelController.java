@@ -67,19 +67,29 @@ public class NovelController {
      */
     @RequestMapping(value = "/list")
     @ResponseBody
-    public EUDataGridResult gettbNovelList(@RequestParam(value="page",defaultValue = "1") int page,
+    public JsonResult gettbNovelList(@RequestParam(value="page",defaultValue = "1") int page,
                                            @RequestParam(value="rows",defaultValue = "30") int rows, TbNovel novel , HttpServletRequest request) throws UnsupportedEncodingException {
         //TbNovel tbNovel = new TbNovel();
         //tbNovel.setTitle(novel.get);
-        if("GET".equalsIgnoreCase( request.getMethod())){
+       /* if("GET".equalsIgnoreCase( request.getMethod())){
             if(novel.getTitle()!=null){
                // novel.setTitle(new String(novel.getTitle().getBytes("ISO-8859-1"),"UTF-8"));
                 String title = novel.getTitle();
+                logger.info("novelcontroller search() 未转码时查询参数 queryString="+title);
                 novel.setTitle(new String(title.getBytes("ISO-8859-1"),"UTF-8")   );
+                logger.info("novelcontroller search() 转码后查询参数 queryString="+novel.getTitle());
             }
-        }
-        EUDataGridResult result = tbNovelService.getTbNovelList(page, rows,novel);
-        return result;
+        }*/
+    	SearchResult searchResult = tbNovelService.getTbNovelList(page, rows,novel);
+    	// 计算总页数
+		long recordCount = searchResult.getRecordCount();
+		long pageCount = recordCount / rows;
+		if (recordCount % rows > 0) {
+			pageCount++;
+		}
+		searchResult.setPageCount(pageCount);
+		searchResult.setCurPage(page);
+        return JsonResult.ok(searchResult);
     }
 
 
@@ -88,23 +98,26 @@ public class NovelController {
     public JsonResult search(@RequestParam("q") String queryString, @RequestParam(defaultValue = "1") Integer page,
                                @RequestParam(defaultValue = "20") Integer rows, HttpServletRequest request) {
         //查询条件不能为空
-        if (StringUtils.isBlank(queryString)) {
+    	logger.info("novelcontroller search() 未转码时查询参数 queryString="+queryString);
+    	if (StringUtils.isBlank(queryString)) {
             return JsonResult.build(400, "查询条件不能为空");
         }
         SearchResult searchResult = null;
         try {
 
-            if("GET".equalsIgnoreCase( request.getMethod())){
+            /*if("GET".equalsIgnoreCase( request.getMethod())){
                 if(queryString!=null){
                     queryString = new String(queryString.getBytes("ISO-8859-1"),"UTF-8");
                 }
-            }
+            }*/
 
             searchResult = searchService.searchNovels(queryString,page,rows);
+            logger.info("novelcontroller search() 查询参数 queryString="+queryString+"  查询结果总记录数："+searchResult.getRecordCount()); 
         } catch (Exception e) {
             e.printStackTrace();
             return JsonResult.build(500, ExceptionUtil.getStackTrace(e));
         }
+        
         return JsonResult.ok(searchResult);
     }
     /**

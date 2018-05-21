@@ -1,12 +1,16 @@
 package com.novel.rest.service.impl;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
+import java.util.List;
+
+import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.SolrServer;
+import org.apache.solr.common.SolrInputDocument;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.novel.common.mapper.TbNovelMapper;
 import com.novel.common.pojo.TbNovel;
 import com.novel.common.pojo.TbNovelExample;
-import com.novel.common.pojo.TbNovelExample.Criteria;
-import com.novel.common.util.EUDataGridResult;
 import com.novel.common.util.ExceptionUtil;
 import com.novel.common.util.JsonResult;
 import com.novel.common.util.SearchResult;
@@ -14,13 +18,6 @@ import com.novel.rest.converter.ManageConvent;
 import com.novel.rest.dao.SearchDao;
 import com.novel.rest.service.SearchService;
 import com.novel.spider.entitys.SpiderNovel;
-import org.apache.solr.client.solrj.SolrQuery;
-import org.apache.solr.client.solrj.SolrServer;
-import org.apache.solr.common.SolrInputDocument;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service()
 public class SearchServiceImpl implements SearchService {
