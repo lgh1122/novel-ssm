@@ -80,6 +80,7 @@ public class NovelController {
                 logger.info("novelcontroller search() 转码后查询参数 queryString="+novel.getTitle());
             }
         }*/
+    	logger.info("未转码时查询参数 queryString="+novel.getTitle());
     	SearchResult searchResult = tbNovelService.getTbNovelList(page, rows,novel);
     	// 计算总页数
 		long recordCount = searchResult.getRecordCount();

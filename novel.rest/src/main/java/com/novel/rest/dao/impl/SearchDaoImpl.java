@@ -65,8 +65,8 @@ public class SearchDaoImpl implements SearchDao {
 			list.add(item);
 			}
 	    result.setItemList(list);
-	    logger.error("通过solr搜索到的书籍总数量为："+result.getRecordCount());
-	    logger.error("通过solr搜索到的书籍数量为："+result.getRecordCount());
+	    logger.info("通过solr搜索到的书籍总数量为："+result.getRecordCount());
+	    
 		return result;
 	}
 

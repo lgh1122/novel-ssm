@@ -107,7 +107,7 @@ public class ManageConvent {
 		//NovelSiteEnum siteenum =  NovelSiteEnum.getEnumById(Long.bitCount( (tbNovel.getNetid())));
 		TbNet net = netMap.get(tbNovel.getNetid());
 		if(tbNovel.getImgpath() != null){
-			spiderNovel.setImgpath(net.getFullurl()+spiderNovel.getImgpath());	
+			spiderNovel.setImgpath(net.getFullurl()+tbNovel.getImgpath());	
 		}
 		spiderNovel.setNetUrl(net.getNovelurl().replace("${novelurl}", tbNovel.getId()+""));
 		return spiderNovel;
@@ -123,9 +123,7 @@ public class ManageConvent {
 		TbChapter tbChapter = mapper.map(spiderChapter, TbChapter.class);
 
 		TbNet net = getTbNetfromMap(spiderChapter.getChapterPath());
-		/*if(spiderNovel.getImgpath() != null){
-			tbNovel.setImgpath(spiderNovel.getImgpath().replace(net.getFullurl(), ""));
-		}*/
+		
 		tbChapter.setNetid(net.getId());
 		tbChapter.setChapterPath(null);
 		return tbChapter;
