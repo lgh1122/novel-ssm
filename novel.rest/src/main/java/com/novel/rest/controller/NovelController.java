@@ -180,6 +180,10 @@ public class NovelController {
                         tbNovel.setUpdatetime(conventNovel.getUpdatetime());
                         tbNovel.setImgpath(conventNovel.getImgpath());
                         tbNovel.setIntroduction(conventNovel.getIntroduction());
+                        if(conventNovel.getIntroduction()==null || "".equals(conventNovel.getIntroduction())){
+                            tbNovel.setIntroduction("暂无简介");
+                        }
+
                         tbNovelService.updateTbNovel(tbNovel);
                         //要更新的小说书籍对象
                     }
