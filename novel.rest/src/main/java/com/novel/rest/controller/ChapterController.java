@@ -5,6 +5,7 @@ import com.novel.common.pojo.TbChapterKey;
 import com.novel.common.pojo.TbNovel;
 import com.novel.common.util.EUDataGridResult;
 import com.novel.common.util.JsonResult;
+import com.novel.common.util.SearchResult;
 import com.novel.rest.converter.ManageConvent;
 import com.novel.rest.service.TbChapterService;
 import com.novel.rest.service.TbNovelService;
@@ -73,9 +74,33 @@ public class ChapterController {
     }*/
 
 
+    @RequestMapping("/chapterpagelist/{netId}/{novelId}")
+    @ResponseBody
+    public JsonResult getChapterListByNovelIdLimit(@PathVariable long netId, @PathVariable long novelId,@RequestParam(required=false) Long startChapterId,
+                                              @RequestParam(defaultValue = "1") Integer page,
+                                              @RequestParam(defaultValue = "50") Integer rows){
+
+        SearchResult searchResult = null;
+        try {
+            searchResult = tbChapterService.getChapterListLimit(netId,novelId,startChapterId,page,rows);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        if(searchResult!=null  ){
+            return JsonResult.ok(searchResult);
+        }else{
+            return JsonResult.build(500,"获取章节列表失败，请联系管理员");
+        }
+
+    }
+
     @RequestMapping("/chapterlist/{netId}/{novelId}")
     @ResponseBody
     public JsonResult getChapterListByNovelId(@PathVariable long netId, @PathVariable long novelId){
+
+
+
         List<TbChapter> chapters = tbChapterService.getChapterList(netId,novelId);
 
         if(chapters!=null && chapters.size() > 0 ){

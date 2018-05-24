@@ -7,7 +7,7 @@ import com.novel.spider.entitys.SpiderNovel;
 public interface SearchService {
 	
 
-	SearchResult searchNovels(String queryString, Integer page, Integer rows) throws Exception;
+	SearchResult searchNovels(String queryString, String df, Integer page, Integer rows) throws Exception;
 
 	JsonResult importItems();
 
