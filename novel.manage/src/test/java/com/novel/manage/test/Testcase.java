@@ -1,5 +1,6 @@
 package com.novel.manage.test;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -11,6 +12,10 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.junit.Test;
 
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.novel.spider.NovelSiteEnum;
 import com.novel.spider.configuration.Configuration;
 import com.novel.spider.entitys.Chapter;
@@ -176,6 +181,25 @@ public class Testcase {
 		}
 		
 	}
+	
+	
+	
+	@Test
+	public void  
+	  givenStringWithSingleQuotes_whenConfigureDeserializing_thenCorrect()   
+	  throws JsonProcessingException, IOException {  
+	    
+	    String json = "{'id':1,'name':'John'}";  
+	   
+	    JsonFactory factory = new JsonFactory();  
+	    factory.enable(JsonParser.Feature.ALLOW_SINGLE_QUOTES);  
+	    ObjectMapper mapper = new ObjectMapper(factory);  
+	   
+	    User user = mapper.reader().withType(User.class)  
+	      .readValue(json);  
+	    
+	    System.out.println(user);
+	}  
 	/**
 	 * 单独获取网站简介和图片路径
 	 */

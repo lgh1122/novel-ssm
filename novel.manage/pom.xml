@@ -121,6 +121,9 @@
 			<groupId>org.apache.solr</groupId>
 			<artifactId>solr-solrj</artifactId>
 		</dependency>
+		
+		 
+		
 	</dependencies>
 	
 	
