@@ -183,7 +183,7 @@ public class NovelController {
                         if(conventNovel.getIntroduction()==null || "".equals(conventNovel.getIntroduction())){
                             tbNovel.setIntroduction("暂无简介");
                         }
-
+//测试
                         tbNovelService.updateTbNovel(tbNovel);
                         //要更新的小说书籍对象
                     }
