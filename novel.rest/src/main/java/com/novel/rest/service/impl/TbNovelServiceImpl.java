@@ -52,12 +52,18 @@ public class TbNovelServiceImpl implements TbNovelService {
 		// 查询书籍列表
 		List<TbNovel> list = novelMapper.selectByExample(example);
 		List<SpiderNovel> spiderNovels = ManageConvent.tbNovelToSpiderNovelList(list);
-		EUDataGridResult result = new EUDataGridResult();
-		result.setRows(spiderNovels);
-		// 取记录总条数
+ 		// 取记录总条数
 		PageInfo<TbNovel> pageInfo = new PageInfo<>(list);
 		searchResult.setItemList(spiderNovels); 
 		searchResult.setRecordCount(pageInfo.getTotal());
+		searchResult.setCurPage(page);
+		// 计算总页数
+		long recordCount = searchResult.getRecordCount();
+		long pageCount = recordCount / rows;
+		if (recordCount % rows > 0) {
+			pageCount++;
+		}
+		searchResult.setPageCount(pageCount);
 		return searchResult;
 	}
 

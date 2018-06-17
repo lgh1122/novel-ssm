@@ -1,10 +1,14 @@
 package com.novel.rest.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.novel.common.mapper.TbChapterMapper;
-import com.novel.common.pojo.TbChapter;
-import com.novel.common.pojo.TbChapterExample;
-import com.novel.common.pojo.TbChapterKey;
+import com.novel.common.pojo.*;
+import com.novel.common.util.EUDataGridResult;
+import com.novel.common.util.SearchResult;
+import com.novel.rest.converter.ManageConvent;
 import com.novel.rest.service.TbChapterService;
+import com.novel.spider.entitys.SpiderNovel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -71,5 +75,36 @@ public class TbChapterServiceImpl implements TbChapterService {
 		criteria.andNovelIdEqualTo(novelId);
 		criteria.andNetidEqualTo(netId);
 		return chapterMapper.selectByExample(example);
+	}
+
+	@Override
+	public SearchResult getChapterListLimit(long netId, long novelId, Long startChapterId, Integer page, Integer rows) {
+		SearchResult<TbChapter> searchResult= new SearchResult<TbChapter>();
+		// 分页处理
+		PageHelper.startPage(page, rows);
+
+		TbChapterExample example = new TbChapterExample();
+		TbChapterExample.Criteria criteria = example.createCriteria();
+		criteria.andNovelIdEqualTo(novelId);
+		criteria.andNetidEqualTo(netId);
+		if(startChapterId !=null){
+			criteria.andIdGreaterThanOrEqualTo(startChapterId);
+		}
+
+		List<TbChapter> tbChapters =	chapterMapper.selectByExample(example);
+		// 取记录总条数
+		PageInfo<TbChapter> pageInfo = new PageInfo<TbChapter>(tbChapters);
+		searchResult.setItemList(tbChapters);
+		searchResult.setRecordCount(pageInfo.getTotal());
+		searchResult.setCurPage(page);
+		// 计算总页数
+		long recordCount = searchResult.getRecordCount();
+		long pageCount = recordCount / rows;
+		if (recordCount % rows > 0) {
+			pageCount++;
+		}
+		searchResult.setPageCount(pageCount);
+
+		return searchResult;
 	}
 }

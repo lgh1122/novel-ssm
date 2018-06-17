@@ -96,7 +96,7 @@ public class NovelController {
 
     @RequestMapping(value = "/query")
     @ResponseBody
-    public JsonResult search(@RequestParam("q") String queryString, @RequestParam(defaultValue = "1") Integer page,
+    public JsonResult search(@RequestParam("q") String queryString, @RequestParam(defaultValue = "novel_keywords") String df, @RequestParam(defaultValue = "1") Integer page,
                                @RequestParam(defaultValue = "20") Integer rows, HttpServletRequest request) {
         //查询条件不能为空
     	logger.info("novelcontroller search() 未转码时查询参数 queryString="+queryString);
@@ -105,14 +105,13 @@ public class NovelController {
         }
         SearchResult searchResult = null;
         try {
-
             /*if("GET".equalsIgnoreCase( request.getMethod())){
                 if(queryString!=null){
                     queryString = new String(queryString.getBytes("ISO-8859-1"),"UTF-8");
                 }
             }*/
 
-            searchResult = searchService.searchNovels(queryString,page,rows);
+            searchResult = searchService.searchNovels(queryString,df,page,rows);
             logger.info("novelcontroller search() 查询参数 queryString="+queryString+"  查询结果总记录数："+searchResult.getRecordCount()); 
         } catch (Exception e) {
             e.printStackTrace();
@@ -181,6 +180,10 @@ public class NovelController {
                         tbNovel.setUpdatetime(conventNovel.getUpdatetime());
                         tbNovel.setImgpath(conventNovel.getImgpath());
                         tbNovel.setIntroduction(conventNovel.getIntroduction());
+                        if(conventNovel.getIntroduction()==null || "".equals(conventNovel.getIntroduction())){
+                            tbNovel.setIntroduction("暂无简介");
+                        }
+
                         tbNovelService.updateTbNovel(tbNovel);
                         //要更新的小说书籍对象
                     }

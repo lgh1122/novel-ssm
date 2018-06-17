@@ -34,7 +34,7 @@ public class SearchServiceImpl implements SearchService {
 
 
 	@Override
-	public SearchResult searchNovels(String queryString, Integer page, Integer rows) throws Exception {
+	public SearchResult searchNovels(String queryString, String df, Integer page, Integer rows) throws Exception {
 		//创建查询对象
 		SolrQuery solrQuery = new SolrQuery();
 		// 放置查询条件
@@ -43,7 +43,7 @@ public class SearchServiceImpl implements SearchService {
 		solrQuery.setStart((page - 1)*rows);
 		solrQuery.setRows(rows);
 		// 设置默认搜索域
-		solrQuery.set("df", "novel_keywords");
+		solrQuery.set("df", df);
 		//设置高亮显示
 		solrQuery.setHighlight(true);
 		solrQuery.addHighlightField("novel_title");
