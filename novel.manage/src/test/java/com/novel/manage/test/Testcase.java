@@ -181,25 +181,17 @@ public class Testcase {
 		}
 		
 	}
-	
-	
-	
 	@Test
-	public void  
-	  givenStringWithSingleQuotes_whenConfigureDeserializing_thenCorrect()   
-	  throws JsonProcessingException, IOException {  
-	    
-	    String json = "{'id':1,'name':'John'}";  
-	   
-	    JsonFactory factory = new JsonFactory();  
-	    factory.enable(JsonParser.Feature.ALLOW_SINGLE_QUOTES);  
-	    ObjectMapper mapper = new ObjectMapper(factory);  
-	   
-	    User user = mapper.reader().withType(User.class)  
-	      .readValue(json);  
-	    
-	    System.out.println(user);
-	}  
+	public void testArr(){
+		int[] a = new int[]{1,2,3,4};
+		int i = 0;
+		a[i++] = a[i++]*2;
+		System.out.println(a[0]);
+
+	}
+	
+	
+
 	/**
 	 * 单独获取网站简介和图片路径
 	 */
