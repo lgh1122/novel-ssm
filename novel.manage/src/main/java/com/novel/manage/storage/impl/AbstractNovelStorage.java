@@ -197,7 +197,7 @@ public abstract class AbstractNovelStorage implements NovelProcessor {
 					}
 					return key;
 				}
-				
+
 			}));
 		}
 		service.shutdown();
@@ -214,5 +214,78 @@ public abstract class AbstractNovelStorage implements NovelProcessor {
 		searchService.importItems();
 	}
 	
-	
+
+	public void test( TbNovel tbNovel){
+
+        try{
+            tbNovelService = (TbNovelService) ServiceLocator.getService("tbNovelService");
+            tbChapterService = (TbChapterService) ServiceLocator.getService("tbChapterService");
+            // 获取数据库中存储的对应书籍信息若存在，表示已经有了，就进行更新，否则进行插入
+            TbNovel oldNovel = tbNovelService.getNovelDescByID(tbNovel.getNetid(),tbNovel.getId());
+            if(oldNovel!=null){
+                if(oldNovel.getLatestchapterid()!=null && !oldNovel.getLatestchapterid().equals(tbNovel.getLatestchapterid()) ){
+                    //两者章节信息不同，说明存在章节信息更新
+                    //需要对数据进行更新操作
+                    System.out.println(oldNovel.getIshaschapter());
+                    // 值为null时 null ==1 会报空指针异常
+                    if( oldNovel.getIshaschapter()!=null && oldNovel.getIshaschapter() == 1){
+                        //											进行章节列表的更新
+                        SpiderNovel spiderNovel = ManageConvent.tbNovelToSpiderNovel(oldNovel);
+                        IChapterSpider chapterSpider = ChapterSpiderFactory.getChapterSpider(spiderNovel.getNetUrl());
+                        Map<String, Object> map = chapterSpider.getsChapter(spiderNovel);
+                        // 得到书籍最新章节，追加章节列表
+												/*if(map == null || map.size() ==0){
+													System.out.println(Thread.currentThread().getName()+"小说---  疑似太监" );
+												}*/
+                        if(map.size() > 0){
+                            logger.debug(Thread.currentThread().getName()+"小说--- 正在抓取章节列表" );
+                            if(map.get("novel")!=null ){
+													/*SpiderNovel sNovel = (SpiderNovel) map.get("novel");
+													spiderNovel.setUpdatetime(new Date());*/
+                                //要更新的小说书籍对象
+                            }
+                            SpiderChapter upChapter  = (SpiderChapter) map.get("updateChapter");
+                            if(upChapter != null){
+                                // 原最后一章节需要更新 update;
+                                TbChapter tc = ManageConvent.spiderToTbChapter(upChapter);
+                                tbChapterService.updateTbChapter(tc);
+                                //删除之后的章节列表
+                                //tbChapterService.deleteChapterByGreaterId(tc);
+                            }
+                            List<SpiderChapter> piderChapters  = (List<SpiderChapter>) map.get("insertchapter");
+                            if(piderChapters != null&& piderChapters.size() > 0){
+                                Map<String, List<SpiderChapter>> subListMap  = CommonUtil.subChapterList(piderChapters, 50);
+                                for (Map.Entry<String, List<SpiderChapter>> entry : subListMap.entrySet()) {
+                                    List<SpiderChapter> childChapters =   entry.getValue() ;
+                                    //批量插入
+                                    List<TbChapter> chapters = ManageConvent.spiderToTbChapterList(childChapters);
+                                    try {
+                                        tbChapterService.insertBatchTbChapter(chapters);
+                                    }catch (Exception e){
+                                        logger.error("小说"+oldNovel.getId() +"--"+oldNovel.getTitle() +"违反唯一约束");
+                                        throw e;
+                                    }
+
+                                }
+                                oldNovel.setIshaschapter((byte)1);
+                            }
+                        }
+                    }
+                    //最新章节的获取取章节列表的最后一个
+                    oldNovel.setLatestchapterid(tbNovel.getLatestchapterid());
+                    oldNovel.setLatestchaptername(tbNovel.getLatestchaptername());
+                    oldNovel.setStatus(tbNovel.getStatus());
+                    oldNovel.setUpdatetime(tbNovel.getUpdatetime());
+                    tbNovelService.updateTbNovel(oldNovel);
+                }
+            }else{
+                tbNovelService.insertTbNovel(tbNovel);
+            }
+        }catch (Exception e){
+            logger.error("小说"+tbNovel.getId() +"--"+tbNovel.getTitle() +"爬取失败");
+            logger.error(e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
 }

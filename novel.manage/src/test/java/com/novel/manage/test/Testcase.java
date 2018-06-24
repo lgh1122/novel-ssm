@@ -1,5 +1,6 @@
 package com.novel.manage.test;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,6 +10,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import com.novel.common.pojo.TbNovel;
+import com.novel.manage.storage.impl.KanShuZhongNovelStorageImpl;
 import org.apache.log4j.Logger;
 import org.junit.Test;
 
@@ -176,6 +179,7 @@ public class Testcase {
 		String url = "http://www.kanshuzhong.com/toplist/lastupdate/16/";
 		INovelSpider  spider = NovelSpiderFactory.getNovelSpider(url);
 		List<SpiderNovel> novels = spider.getsNovel(url,3);
+
 		for (SpiderNovel novel : novels) {
 			System.out.println(novel);
 		}
@@ -197,7 +201,7 @@ public class Testcase {
 	 */
 	@Test
 	public void testGetKanshuzhongNovelDescImg() {
-		String url = "http://www.kanshuzhong.com/book/118665/";
+		String url = "http://www.kanshuzhong.com/book/119502/";
 		INovelDescSpider  spider = new KanShuZhongNovelDescSpider();
 		
 		try {
@@ -250,7 +254,20 @@ public class Testcase {
         logger.info("This is info message.");  
         // 记录error级别的信息  
         logger.error("This is error message.");  
-    }  
+    }
+    @Test
+    public void testUpdateNovel() throws FileNotFoundException {
+		KanShuZhongNovelStorageImpl	processor = new KanShuZhongNovelStorageImpl();
+
+		TbNovel novel = new TbNovel();
+		novel.setLatestchapterid(28306653L);
+		novel.setId(120083L);
+		novel.setNetid(3L);
+
+		novel.setTitle("氪无不胜");
+		novel.setLatestchaptername("神木天叶");
+		processor.test(novel);
+	}
 		
 	
 }
