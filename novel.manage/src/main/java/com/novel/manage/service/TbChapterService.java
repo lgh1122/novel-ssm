@@ -18,4 +18,6 @@ public interface TbChapterService {
 
 	public void updateTbChapter(TbChapter tbChapter);
 
+	public void deleteChapterByGreaterId(TbChapter tc);
+
 }

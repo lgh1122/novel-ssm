@@ -53,4 +53,19 @@ public class TbChapterServiceImpl implements TbChapterService {
 	public void updateTbChapter(TbChapter tbChapter) {
         chapterMapper.updateByPrimaryKey(tbChapter);
 	}
+
+	@Override
+	public void deleteChapterByGreaterId(TbChapter tc) {
+		TbChapterExample example = new TbChapterExample();
+		// 分页处理
+
+		TbChapterExample.Criteria criteria = example.createCriteria();
+
+		criteria.andIdGreaterThan(tc.getId());
+		criteria.andNovelIdEqualTo(tc.getNovelId());
+		criteria.andNetidEqualTo(tc.getNetid());
+		
+		chapterMapper.deleteByExample(example);
+		
+	}
 }

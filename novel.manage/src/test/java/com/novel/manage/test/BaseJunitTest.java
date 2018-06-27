@@ -18,12 +18,12 @@ public class BaseJunitTest {
         KanShuZhongNovelStorageImpl processor = new KanShuZhongNovelStorageImpl();
 
         TbNovel novel = new TbNovel();
-        novel.setLatestchapterid(28307845L);
-        novel.setId(1465L);
+        novel.setLatestchapterid(28319322L);
+        novel.setId(119134L);
         novel.setNetid(3L);
 
-        novel.setTitle("无敌天下");
-        novel.setLatestchaptername("第三千一百六十三章 黄龙套装四件");
+        novel.setTitle("大道朝天");
+        novel.setLatestchaptername("第三千一百六十七章 数万年之后");
         processor.test(novel);
     }
 

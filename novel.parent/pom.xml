@@ -34,7 +34,7 @@
 		<jedis.version>2.7.2</jedis.version>
 		<solrj.version>4.10.3</solrj.version>
 		<jsoup.version>1.9.2</jsoup.version>
-		<httpclient.version>4.3.5</httpclient.version>
+		<httpclient.version>4.5.3</httpclient.version>
 		<dom4j.version>1.6.1</dom4j.version>
 		<log4j.version>1.2.17</log4j.version>
 		<dozer.version>5.5.1</dozer.version>

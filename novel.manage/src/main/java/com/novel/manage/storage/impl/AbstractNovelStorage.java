@@ -131,15 +131,16 @@ public abstract class AbstractNovelStorage implements NovelProcessor {
 											//需要对数据进行更新操作
 											System.out.println(oldNovel.getIshaschapter());
 											// 值为null时 null ==1 会报空指针异常
+											TbChapter newChapter = new TbChapter();
+						                    newChapter.setId(tbNovel.getLatestchapterid());
+						                    newChapter.setTitle(tbNovel.getLatestchaptername());
 											if( oldNovel.getIshaschapter()!=null && oldNovel.getIshaschapter() == 1){
 												//											进行章节列表的更新
 												SpiderNovel spiderNovel = ManageConvent.tbNovelToSpiderNovel(oldNovel);
 												IChapterSpider chapterSpider = ChapterSpiderFactory.getChapterSpider(spiderNovel.getNetUrl());
 												Map<String, Object> map = chapterSpider.getsChapter(spiderNovel);
 												// 得到书籍最新章节，追加章节列表
-												/*if(map == null || map.size() ==0){
-													System.out.println(Thread.currentThread().getName()+"小说---  疑似太监" );
-												}*/
+												
 												if(map.size() > 0){
 													logger.debug(Thread.currentThread().getName()+"小说--- 正在抓取章节列表" );
 													if(map.get("novel")!=null ){
@@ -152,6 +153,8 @@ public abstract class AbstractNovelStorage implements NovelProcessor {
 														// 原最后一章节需要更新 update;
 														TbChapter tc = ManageConvent.spiderToTbChapter(upChapter);
 														tbChapterService.updateTbChapter(tc);
+														//删除之后的章节列表
+						                                tbChapterService.deleteChapterByGreaterId(tc);
 													}
 													List<SpiderChapter> piderChapters  = (List<SpiderChapter>) map.get("insertchapter");
 													if(piderChapters != null&& piderChapters.size() > 0){
@@ -166,14 +169,14 @@ public abstract class AbstractNovelStorage implements NovelProcessor {
 																logger.error("小说"+oldNovel.getId() +"--"+oldNovel.getTitle() +"违反唯一约束");
 																throw e;
 															}
-
+															newChapter = chapters.get(chapters.size()-1);
 														}
 														oldNovel.setIshaschapter((byte)1);
 													}
 												}
 											}
-											oldNovel.setLatestchapterid(tbNovel.getLatestchapterid());
-											oldNovel.setLatestchaptername(tbNovel.getLatestchaptername());
+											oldNovel.setLatestchapterid(newChapter.getId());
+											oldNovel.setLatestchaptername(newChapter.getTitle());
 											oldNovel.setStatus(tbNovel.getStatus());
 											oldNovel.setUpdatetime(tbNovel.getUpdatetime());
 											tbNovelService.updateTbNovel(oldNovel);
@@ -227,6 +230,10 @@ public abstract class AbstractNovelStorage implements NovelProcessor {
                     //两者章节信息不同，说明存在章节信息更新
                     //需要对数据进行更新操作
                     System.out.println(oldNovel.getIshaschapter());
+                    
+                    TbChapter newChapter = new TbChapter();
+                    newChapter.setId(tbNovel.getLatestchapterid());
+                    newChapter.setTitle(tbNovel.getLatestchaptername());
                     // 值为null时 null ==1 会报空指针异常
                     if( oldNovel.getIshaschapter()!=null && oldNovel.getIshaschapter() == 1){
                         //											进行章节列表的更新
@@ -234,9 +241,7 @@ public abstract class AbstractNovelStorage implements NovelProcessor {
                         IChapterSpider chapterSpider = ChapterSpiderFactory.getChapterSpider(spiderNovel.getNetUrl());
                         Map<String, Object> map = chapterSpider.getsChapter(spiderNovel);
                         // 得到书籍最新章节，追加章节列表
-												/*if(map == null || map.size() ==0){
-													System.out.println(Thread.currentThread().getName()+"小说---  疑似太监" );
-												}*/
+						 
                         if(map.size() > 0){
                             logger.debug(Thread.currentThread().getName()+"小说--- 正在抓取章节列表" );
                             if(map.get("novel")!=null ){
@@ -250,11 +255,13 @@ public abstract class AbstractNovelStorage implements NovelProcessor {
                                 TbChapter tc = ManageConvent.spiderToTbChapter(upChapter);
                                 tbChapterService.updateTbChapter(tc);
                                 //删除之后的章节列表
-                                //tbChapterService.deleteChapterByGreaterId(tc);
+                                tbChapterService.deleteChapterByGreaterId(tc);
                             }
                             List<SpiderChapter> piderChapters  = (List<SpiderChapter>) map.get("insertchapter");
                             if(piderChapters != null&& piderChapters.size() > 0){
                                 Map<String, List<SpiderChapter>> subListMap  = CommonUtil.subChapterList(piderChapters, 50);
+                                newChapter.setId(piderChapters.get(piderChapters.size()-1).getId());
+                                newChapter.setTitle(piderChapters.get(piderChapters.size()-1).getTitle());
                                 for (Map.Entry<String, List<SpiderChapter>> entry : subListMap.entrySet()) {
                                     List<SpiderChapter> childChapters =   entry.getValue() ;
                                     //批量插入
@@ -264,16 +271,17 @@ public abstract class AbstractNovelStorage implements NovelProcessor {
                                     }catch (Exception e){
                                         logger.error("小说"+oldNovel.getId() +"--"+oldNovel.getTitle() +"违反唯一约束");
                                         throw e;
+                                        //shouxianshi1 ranhou shier 
                                     }
-
+                                   
                                 }
                                 oldNovel.setIshaschapter((byte)1);
                             }
                         }
                     }
                     //最新章节的获取取章节列表的最后一个
-                    oldNovel.setLatestchapterid(tbNovel.getLatestchapterid());
-                    oldNovel.setLatestchaptername(tbNovel.getLatestchaptername());
+                    oldNovel.setLatestchapterid(newChapter.getId());
+                    oldNovel.setLatestchaptername(newChapter.getTitle());
                     oldNovel.setStatus(tbNovel.getStatus());
                     oldNovel.setUpdatetime(tbNovel.getUpdatetime());
                     tbNovelService.updateTbNovel(oldNovel);
