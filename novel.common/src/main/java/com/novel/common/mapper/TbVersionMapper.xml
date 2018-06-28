@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.novel.common.mapper.TbVersionMapper" >
+  <resultMap id="BaseResultMap" type="com.novel.common.pojo.TbVersion" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="appName" property="appName" jdbcType="VARCHAR" />
+    <result column="newAppSize" property="newAppSize" jdbcType="REAL" />
+    <result column="newAppVersionCode" property="newAppVersionCode" jdbcType="INTEGER" />
+    <result column="newAppVersionName" property="newAppVersionName" jdbcType="VARCHAR" />
+    <result column="newAppUpdateDesc" property="newAppUpdateDesc" jdbcType="VARCHAR" />
+    <result column="newAppReleaseTime" property="newAppReleaseTime" jdbcType="VARCHAR" />
+    <result column="newAppUrl" property="newAppUrl" jdbcType="VARCHAR" />
+    <result column="isForceUpdate" property="isForceUpdate" jdbcType="INTEGER" />
+    <result column="isUseNewPage" property="isUseNewPage" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, appName, newAppSize, newAppVersionCode, newAppVersionName, newAppUpdateDesc,
+    newAppReleaseTime, newAppUrl, isForceUpdate, isUseNewPage
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.novel.common.pojo.TbVersionExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_version
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_version
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tb_version
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.novel.common.pojo.TbVersionExample" >
+    delete from tb_version
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.novel.common.pojo.TbVersion" >
+    insert into tb_version (id, appName, newAppSize,
+      newAppVersionCode, newAppVersionName, newAppUpdateDesc,
+      newAppReleaseTime, newAppUrl, isForceUpdate,
+      isUseNewPage)
+    values (#{id,jdbcType=BIGINT}, #{appName,jdbcType=VARCHAR}, #{newAppSize,jdbcType=REAL},
+      #{newAppVersionCode,jdbcType=INTEGER}, #{newAppVersionName,jdbcType=VARCHAR}, #{newAppUpdateDesc,jdbcType=VARCHAR},
+      #{newAppReleaseTime,jdbcType=VARCHAR}, #{newAppUrl,jdbcType=VARCHAR}, #{isForceUpdate,jdbcType=INTEGER},
+      #{isUseNewPage,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.novel.common.pojo.TbVersion" >
+    insert into tb_version
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="appName != null" >
+        appName,
+      </if>
+      <if test="newAppSize != null" >
+        newAppSize,
+      </if>
+      <if test="newAppVersionCode != null" >
+        newAppVersionCode,
+      </if>
+      <if test="newAppVersionName != null" >
+        newAppVersionName,
+      </if>
+      <if test="newAppUpdateDesc != null" >
+        newAppUpdateDesc,
+      </if>
+      <if test="newAppReleaseTime != null" >
+        newAppReleaseTime,
+      </if>
+      <if test="newAppUrl != null" >
+        newAppUrl,
+      </if>
+      <if test="isForceUpdate != null" >
+        isForceUpdate,
+      </if>
+      <if test="isUseNewPage != null" >
+        isUseNewPage,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="appName != null" >
+        #{appName,jdbcType=VARCHAR},
+      </if>
+      <if test="newAppSize != null" >
+        #{newAppSize,jdbcType=REAL},
+      </if>
+      <if test="newAppVersionCode != null" >
+        #{newAppVersionCode,jdbcType=INTEGER},
+      </if>
+      <if test="newAppVersionName != null" >
+        #{newAppVersionName,jdbcType=VARCHAR},
+      </if>
+      <if test="newAppUpdateDesc != null" >
+        #{newAppUpdateDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="newAppReleaseTime != null" >
+        #{newAppReleaseTime,jdbcType=VARCHAR},
+      </if>
+      <if test="newAppUrl != null" >
+        #{newAppUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="isForceUpdate != null" >
+        #{isForceUpdate,jdbcType=INTEGER},
+      </if>
+      <if test="isUseNewPage != null" >
+        #{isUseNewPage,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.novel.common.pojo.TbVersionExample" resultType="java.lang.Integer" >
+    select count(*) from tb_version
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tb_version
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.appName != null" >
+        appName = #{record.appName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.newAppSize != null" >
+        newAppSize = #{record.newAppSize,jdbcType=REAL},
+      </if>
+      <if test="record.newAppVersionCode != null" >
+        newAppVersionCode = #{record.newAppVersionCode,jdbcType=INTEGER},
+      </if>
+      <if test="record.newAppVersionName != null" >
+        newAppVersionName = #{record.newAppVersionName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.newAppUpdateDesc != null" >
+        newAppUpdateDesc = #{record.newAppUpdateDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.newAppReleaseTime != null" >
+        newAppReleaseTime = #{record.newAppReleaseTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.newAppUrl != null" >
+        newAppUrl = #{record.newAppUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isForceUpdate != null" >
+        isForceUpdate = #{record.isForceUpdate,jdbcType=INTEGER},
+      </if>
+      <if test="record.isUseNewPage != null" >
+        isUseNewPage = #{record.isUseNewPage,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tb_version
+    set id = #{record.id,jdbcType=BIGINT},
+      appName = #{record.appName,jdbcType=VARCHAR},
+      newAppSize = #{record.newAppSize,jdbcType=REAL},
+      newAppVersionCode = #{record.newAppVersionCode,jdbcType=INTEGER},
+      newAppVersionName = #{record.newAppVersionName,jdbcType=VARCHAR},
+      newAppUpdateDesc = #{record.newAppUpdateDesc,jdbcType=VARCHAR},
+      newAppReleaseTime = #{record.newAppReleaseTime,jdbcType=VARCHAR},
+      newAppUrl = #{record.newAppUrl,jdbcType=VARCHAR},
+      isForceUpdate = #{record.isForceUpdate,jdbcType=INTEGER},
+      isUseNewPage = #{record.isUseNewPage,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.novel.common.pojo.TbVersion" >
+    update tb_version
+    <set >
+      <if test="appName != null" >
+        appName = #{appName,jdbcType=VARCHAR},
+      </if>
+      <if test="newAppSize != null" >
+        newAppSize = #{newAppSize,jdbcType=REAL},
+      </if>
+      <if test="newAppVersionCode != null" >
+        newAppVersionCode = #{newAppVersionCode,jdbcType=INTEGER},
+      </if>
+      <if test="newAppVersionName != null" >
+        newAppVersionName = #{newAppVersionName,jdbcType=VARCHAR},
+      </if>
+      <if test="newAppUpdateDesc != null" >
+        newAppUpdateDesc = #{newAppUpdateDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="newAppReleaseTime != null" >
+        newAppReleaseTime = #{newAppReleaseTime,jdbcType=VARCHAR},
+      </if>
+      <if test="newAppUrl != null" >
+        newAppUrl = #{newAppUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="isForceUpdate != null" >
+        isForceUpdate = #{isForceUpdate,jdbcType=INTEGER},
+      </if>
+      <if test="isUseNewPage != null" >
+        isUseNewPage = #{isUseNewPage,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.novel.common.pojo.TbVersion" >
+    update tb_version
+    set appName = #{appName,jdbcType=VARCHAR},
+      newAppSize = #{newAppSize,jdbcType=REAL},
+      newAppVersionCode = #{newAppVersionCode,jdbcType=INTEGER},
+      newAppVersionName = #{newAppVersionName,jdbcType=VARCHAR},
+      newAppUpdateDesc = #{newAppUpdateDesc,jdbcType=VARCHAR},
+      newAppReleaseTime = #{newAppReleaseTime,jdbcType=VARCHAR},
+      newAppUrl = #{newAppUrl,jdbcType=VARCHAR},
+      isForceUpdate = #{isForceUpdate,jdbcType=INTEGER},
+      isUseNewPage = #{isUseNewPage,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

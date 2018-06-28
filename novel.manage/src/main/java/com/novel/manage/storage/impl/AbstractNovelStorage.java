@@ -158,10 +158,12 @@ public abstract class AbstractNovelStorage implements NovelProcessor {
 													}
 													List<SpiderChapter> piderChapters  = (List<SpiderChapter>) map.get("insertchapter");
 													if(piderChapters != null&& piderChapters.size() > 0){
+														newChapter.setId(piderChapters.get(piderChapters.size()-1).getId());
+														newChapter.setTitle(piderChapters.get(piderChapters.size()-1).getTitle());
 														Map<String, List<SpiderChapter>> subListMap  = CommonUtil.subChapterList(piderChapters, 50);
 														for (Map.Entry<String, List<SpiderChapter>> entry : subListMap.entrySet()) {
 															List<SpiderChapter> childChapters =   entry.getValue() ;
-															//批量插入
+															// 批量插入
 															List<TbChapter> chapters = ManageConvent.spiderToTbChapterList(childChapters);
 															try {
 																tbChapterService.insertBatchTbChapter(chapters);
@@ -169,8 +171,7 @@ public abstract class AbstractNovelStorage implements NovelProcessor {
 																logger.error("小说"+oldNovel.getId() +"--"+oldNovel.getTitle() +"违反唯一约束");
 																throw e;
 															}
-															newChapter = chapters.get(chapters.size()-1);
-														}
+ 														}
 														oldNovel.setIshaschapter((byte)1);
 													}
 												}
