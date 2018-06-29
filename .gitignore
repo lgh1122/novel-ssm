@@ -31,7 +31,7 @@ novel.manage/novel.manage.iml
 novel.parent/novel.parent.iml
 novel.spider/novel.spider.iml
 novel.manage/target/*
-novel.manage/src/main/resources/resource/db.properties
+novel.manage/src/main/resources/resource/*
 novel.common/target/classes/com/novel/common/mapper/TbChapterMapper.xml
 novel.common/target/classes/com/novel/common/mapper/TbNetMapper.xml
 novel.common/target/classes/com/novel/common/mapper/TbNovelMapper.xml
@@ -42,7 +42,7 @@ novel.common/target/maven-archiver/
 novel.common/target/maven-status/
 novel.rest/src/test/
 novel.rest/target/*
-novel.rest/src/main/resources/resource/db.properties
+novel.rest/src/main/resources/resource/*
 novel.spider/target/generated-sources/
 novel.spider/target/generated-test-sources/
 novel.spider/target/maven-archiver/

@@ -11,6 +11,7 @@ public class CheckUpdateInfo implements Serializable {
 	    private String newAppReleaseTime;
 	    private String newAppUrl;
 	    private int isForceUpdate;
+	    private int isUsePreDialog;
 
 	    public CheckUpdateInfo() {
 	    }
@@ -88,6 +89,14 @@ public class CheckUpdateInfo implements Serializable {
 
 		public void setIsForceUpdate(int isForceUpdate) {
 			this.isForceUpdate = isForceUpdate;
+		}
+
+		public int getIsUsePreDialog() {
+			return isUsePreDialog;
+		}
+
+		public void setIsUsePreDialog(int isUsePreDialog) {
+			this.isUsePreDialog = isUsePreDialog;
 		}
 	    
 	    
