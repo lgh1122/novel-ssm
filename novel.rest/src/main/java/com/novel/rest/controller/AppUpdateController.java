@@ -1,20 +1,28 @@
 package com.novel.rest.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.novel.common.pojo.TbVersion;
+import com.novel.rest.service.TbVersionService;
 
  
 @Controller
 @RequestMapping("/version")
 public class AppUpdateController {
 	
+	@Autowired
+	private TbVersionService tbVersionService;
+	
 	@RequestMapping(value = "/find")
     @ResponseBody
 	public TbVersion findNewAppVersion() {
 		TbVersion mCheckUpdateInfo = new TbVersion();
+		
+		TbVersion versionInfo = tbVersionService.findNewTbVersion();
+		
 		mCheckUpdateInfo.setAppName("都邦水印相机");
 		 
 		// 是多少
