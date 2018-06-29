@@ -16,7 +16,7 @@ public class AppUpdateController {
 		CheckUpdateInfo mCheckUpdateInfo = new CheckUpdateInfo();
 		mCheckUpdateInfo.setAppName("都邦水印相机");
 		 
-		// 
+		// 是多少
 	    mCheckUpdateInfo.setIsForceUpdate(1);//设置是否强制更新,该方法的参数只要和服务端商定好什么数字代表强制更新即可
 		mCheckUpdateInfo.setNewAppReleaseTime("2018-06-20 12:37");//软件发布时间
 		mCheckUpdateInfo.setNewAppSize(4.3f);//单位为M
