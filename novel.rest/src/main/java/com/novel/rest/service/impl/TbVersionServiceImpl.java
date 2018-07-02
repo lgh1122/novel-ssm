@@ -38,7 +38,8 @@ public class TbVersionServiceImpl implements TbVersionService {
 
 	@Override
 	public TbVersion findNewTbVersion() {
-		
- 		return null;
+	        // 查询书籍列表
+	    TbVersion tbVersion = tbVersionMapper.selectTheNewVersionInfo( );
+ 		return tbVersion;
 	}
 }
