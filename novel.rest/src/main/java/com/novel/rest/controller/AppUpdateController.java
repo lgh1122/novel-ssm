@@ -33,7 +33,7 @@ public class AppUpdateController {
 		mCheckUpdateInfo.setNewAppVersionName("2.0.2");
 		mCheckUpdateInfo.setNewAppUpdateDesc("1,优化下载逻辑\n2,修复一些bug\n3,完全实现强制更新与非强制更新逻辑\n4,非强制更新状态下进行下载,默认在后台进行下载\n5,当下载成功时,会在通知栏显示一个通知,点击该通知,进入安装应用界面\n6,当下载失败时,会在通知栏显示一个通知,点击该通知,会重新下载该应用.");
         
-       mCheckUpdateInfo.setIsUseNewPage(1);*/
+        mCheckUpdateInfo.setIsUseNewPage(1);*/
 		return versionInfo;
 		
 	}
