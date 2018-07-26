@@ -102,7 +102,7 @@ public abstract class AbstractNovelStorage implements NovelProcessor {
 	}
 	@Override
 	public void processUpdate(){
-
+		logger.debug("开始更新小说列表信息 updateTasks.size() = "+updateTasks.size());
 		ExecutorService service = Executors.newFixedThreadPool(updateTasks.size());
 		List<Future<String>> futures = new ArrayList<Future<String>>(updateTasks.size());
 		for (Entry<String, String> entry : updateTasks.entrySet()) {
@@ -116,11 +116,17 @@ public abstract class AbstractNovelStorage implements NovelProcessor {
 					while (iterator.hasNext()) {
 						k++;
 						try {
+							logger.debug("开始抓取[" + key + "] 的 URL:" + spider.next());
  							System.err.println("开始抓取[" + key + "] 的 URL:" + spider.next());
 							List<SpiderNovel> novels = iterator.next();
 							List<TbNovel> tbNovels = ManageConvent.spiderToTbNovelList(novels);
 							tbNovelService = (TbNovelService) ServiceLocator.getService("tbNovelService");
 							tbChapterService = (TbChapterService) ServiceLocator.getService("tbChapterService");
+							if(tbNovels != null) {
+								logger.debug("开始抓取[" + key + "] 的 URL下的小说列表集合为" + tbNovels.size());
+							}else {
+								logger.debug("开始抓取[" + key + "] 的 URL下的小说列表集合为空");
+							}
 							for (TbNovel tbNovel : tbNovels) {
 								try{
 									// 获取数据库中存储的对应书籍信息若存在，表示已经有了，就进行更新，否则进行插入
@@ -129,7 +135,7 @@ public abstract class AbstractNovelStorage implements NovelProcessor {
 										if(oldNovel.getLatestchapterid()!=null && !oldNovel.getLatestchapterid().equals(tbNovel.getLatestchapterid()) ){
 											//两者章节信息不同，说明存在章节信息更新
 											//需要对数据进行更新操作
-											System.out.println(oldNovel.getIshaschapter());
+											//System.out.println(oldNovel.getIshaschapter());
 											// 值为null时 null ==1 会报空指针异常
 											TbChapter newChapter = new TbChapter();
 						                    newChapter.setId(tbNovel.getLatestchapterid());
@@ -192,6 +198,8 @@ public abstract class AbstractNovelStorage implements NovelProcessor {
 								}
 							}
 						} catch (Exception e) {
+							logger.error("抓取url发生异常");
+							logger.error(e.getMessage());
 							e.printStackTrace();
 						}
 						if(k>=updateSkip){
@@ -210,6 +218,7 @@ public abstract class AbstractNovelStorage implements NovelProcessor {
 				System.out.println("抓取[" + future.get() + "]结束！");
 
 			} catch (Exception e) {
+				logger.error(e.getMessage());
 				e.printStackTrace();
 			}
 		}
