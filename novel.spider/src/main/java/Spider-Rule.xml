@@ -62,17 +62,6 @@
 		
 	</site>
 	
-	<site>
-		<title>三好小说</title>
-		<charset>GBK</charset>
-		<url>http://www.sanhao3.net</url>
-		<chapter-list-selector>.liebiao li a</chapter-list-selector>
-		<!-- 章节标题 -->
-		<chapter-detail-title-selector>.bread-crumbs li,4</chapter-detail-title-selector>
-		<!-- 章节内容 -->
-		<chapter-detail-content-selector>#content </chapter-detail-content-selector>
-		<chapter-detail-prev-selector>#thumb a,1</chapter-detail-prev-selector>
-		<chapter-detail-next-selector>#thumb a,3</chapter-detail-next-selector>
-	</site>
+
 
 </sites>

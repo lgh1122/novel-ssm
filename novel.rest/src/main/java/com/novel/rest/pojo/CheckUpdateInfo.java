@@ -12,6 +12,7 @@ public class CheckUpdateInfo implements Serializable {
 	    private String newAppUrl;
 	    private int isForceUpdate;
 
+	    private int isUseNewPage;
 	    public CheckUpdateInfo() {
 	    }
 
@@ -30,63 +31,71 @@ public class CheckUpdateInfo implements Serializable {
 			return appName;
 		}
 
-		public void setAppName(String appName) {
+	public int getisUseNewPage() {
+		return isUseNewPage;
+	}
+
+	public void setisUseNewPage(int isUseNewPage) {
+		this.isUseNewPage = isUseNewPage;
+	}
+
+	public void setAppName(String appName) {
 			this.appName = appName;
 		}
 
-		public float getNewAppSize() {
+		public float getnewAppSize() {
 			return newAppSize;
 		}
 
-		public void setNewAppSize(float newAppSize) {
+		public void setnewAppSize(float newAppSize) {
 			this.newAppSize = newAppSize;
 		}
 
-		public int getNewAppVersionCode() {
+		public int getnewAppVersionCode() {
 			return newAppVersionCode;
 		}
 
-		public void setNewAppVersionCode(int newAppVersionCode) {
+		public void setnewAppVersionCode(int newAppVersionCode) {
 			this.newAppVersionCode = newAppVersionCode;
 		}
 
-		public String getNewAppVersionName() {
+		public String getnewAppVersionName() {
 			return newAppVersionName;
 		}
 
-		public void setNewAppVersionName(String newAppVersionName) {
+		public void setnewAppVersionName(String newAppVersionName) {
 			this.newAppVersionName = newAppVersionName;
 		}
 
-		public String getNewAppUpdateDesc() {
+		public String getnewAppUpdateDesc() {
 			return newAppUpdateDesc;
 		}
 
-		public void setNewAppUpdateDesc(String newAppUpdateDesc) {
+		public void setnewAppUpdateDesc(String newAppUpdateDesc) {
 			this.newAppUpdateDesc = newAppUpdateDesc;
 		}
 
-		public String getNewAppReleaseTime() {
+		public String getnewAppReleaseTime() {
 			return newAppReleaseTime;
 		}
 
-		public void setNewAppReleaseTime(String newAppReleaseTime) {
+		public void setnewAppReleaseTime(String newAppReleaseTime) {
 			this.newAppReleaseTime = newAppReleaseTime;
 		}
 
-		public String getNewAppUrl() {
+		public String getnewAppUrl() {
 			return newAppUrl;
 		}
 
-		public void setNewAppUrl(String newAppUrl) {
+		public void setnewAppUrl(String newAppUrl) {
 			this.newAppUrl = newAppUrl;
 		}
 
-		public int getIsForceUpdate() {
+		public int getisForceUpdate() {
 			return isForceUpdate;
 		}
 
-		public void setIsForceUpdate(int isForceUpdate) {
+		public void setisForceUpdate(int isForceUpdate) {
 			this.isForceUpdate = isForceUpdate;
 		}
 	    
