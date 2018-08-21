@@ -50,4 +50,8 @@
     <servlet-name>novel.rest</servlet-name>
     <url-pattern>*.action</url-pattern>
   </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>novel.rest</servlet-name>
+    <url-pattern>/v2/api-docs</url-pattern>
+</servlet-mapping>
 </web-app>

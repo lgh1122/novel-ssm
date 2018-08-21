@@ -19,6 +19,8 @@ public interface TbVersionMapper {
     List<TbVersion> selectByExample(TbVersionExample example);
 
     TbVersion selectByPrimaryKey(Long id);
+    
+    TbVersion selectTheNewVersionInfo();
 
     int updateByExampleSelective(@Param("record") TbVersion record, @Param("example") TbVersionExample example);
 

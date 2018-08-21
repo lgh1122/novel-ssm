@@ -95,6 +95,12 @@
     from tb_version
     where id = #{id,jdbcType=BIGINT}
   </select>
+  <select id="selectTheNewVersionInfo" resultMap="BaseResultMap"  >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_version
+      ORDER BY newAppVersionCode DESC LIMIT 0,1
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from tb_version
     where id = #{id,jdbcType=BIGINT}
