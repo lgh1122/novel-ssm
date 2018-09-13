@@ -38,7 +38,7 @@ public class COSClientUtil {
     public static Logger logger = Logger.getLogger(COSClientUtil.class);
 
 	public static void main(String[] args) {
- 		InputStream is =  String2InputStream("23290909323ÊÔÉÏ´«");
+ 		InputStream is =  String2InputStream("23290909323è¯•ä¸Šä¼ ");
 		COSClientUtil util = new COSClientUtil();
 		String fullFileName = "/key/hello.txt";
 		util.uploadFile2Cos(is, fullFileName);
@@ -51,19 +51,19 @@ public class COSClientUtil {
 		logger.info("");
 	}
 	
-	//todo ÕâĞ©±äÁ¿ĞÅÏ¢×ÔĞĞµ½ ÌÚÑ¶ÔÆ¶ÔÏó´æ´¢¿ØÖÆÌ¨ »ñÈ¡
-	// ´æ´¢Í¨Ãû³Æ			Ìæ»»³É×Ô¼ºµÄ
+	//todo è¿™äº›å˜é‡ä¿¡æ¯è‡ªè¡Œåˆ° è…¾è®¯äº‘å¯¹è±¡å­˜å‚¨æ§åˆ¶å° è·å–
+	// å­˜å‚¨é€šåç§°			æ›¿æ¢æˆè‡ªå·±çš„
 	private static   String bucketName = "";
-	//secretId 			Ìæ»»³É×Ô¼ºµÄ
+	//secretId 			æ›¿æ¢æˆè‡ªå·±çš„
 	private static   String secretId = "";
-	// secretKey		        Ìæ»»³É×Ô¼ºµÄ
+	// secretKey		        æ›¿æ¢æˆè‡ªå·±çš„
 	private static   String secretKey = "";
 
-	// 1 ³õÊ¼»¯ÓÃ»§Éí·İĞÅÏ¢(secretId, secretKey)
+	// 1 åˆå§‹åŒ–ç”¨æˆ·èº«ä»½ä¿¡æ¯(secretId, secretKey)
 	private static   COSCredentials cred;
-	// 2 ÉèÖÃbucketµÄÇøÓò, COSµØÓòµÄ¼ò³ÆÇë²ÎÕÕ https://cloud.tencent.com/document/product/436/6224
+	// 2 è®¾ç½®bucketçš„åŒºåŸŸ, COSåœ°åŸŸçš„ç®€ç§°è¯·å‚ç…§ https://cloud.tencent.com/document/product/436/6224
 	private static   ClientConfig clientConfig ;
-	// 3 Éú³Écos¿Í»§¶Ë
+	// 3 ç”Ÿæˆcoså®¢æˆ·ç«¯
 	//private static   COSClient cosClient ;
 	
 	private COSClient cOSClient;
@@ -101,14 +101,14 @@ public class COSClientUtil {
 		}
 
 	/**
-	 * Ïú»Ù
+	 * é”€æ¯
 	 */
 	public void destory() {
 		cOSClient.shutdown();
 	}
 
 	/**
-	 * ÉÏ´«Í¼Æ¬
+	 * ä¸Šä¼ å›¾ç‰‡
 	 *
 	 * @param url
 	 */
@@ -120,13 +120,13 @@ public class COSClientUtil {
 			String[] split = url.split("/");
 			this.uploadFile2Cos(fin, split[split.length - 1]);
 		} catch (FileNotFoundException e) {
-			throw new Exception("Í¼Æ¬ÉÏ´«Ê§°Ü");
+			throw new Exception("å›¾ç‰‡ä¸Šä¼ å¤±è´¥");
 		}
 	}
 
 	public String uploadFile2Cos(MultipartFile file) throws Exception {
 		if (file.getSize() > 10 * 1024 * 1024) {
-			throw new Exception("ÉÏ´«Í¼Æ¬´óĞ¡²»ÄÜ³¬¹ı10M£¡");
+			throw new Exception("ä¸Šä¼ å›¾ç‰‡å¤§å°ä¸èƒ½è¶…è¿‡10Mï¼");
 		}
 		String originalFilename = file.getOriginalFilename();
 		String substring = originalFilename.substring(originalFilename.lastIndexOf(".")).toLowerCase();
@@ -137,12 +137,12 @@ public class COSClientUtil {
 			this.uploadFile2Cos(inputStream, name);
 			return name;
 		} catch (Exception e) {
-			throw new Exception("Í¼Æ¬ÉÏ´«Ê§°Ü");
+			throw new Exception("å›¾ç‰‡ä¸Šä¼ å¤±è´¥");
 		}
 	}
 
 	/**
-	 * »ñµÃÍ¼Æ¬Â·¾¶
+	 * è·å¾—å›¾ç‰‡è·¯å¾„
 	 *
 	 * @param fileUrl
 	 * @return
@@ -152,15 +152,15 @@ public class COSClientUtil {
 	}
 
 	/**
-	 * »ñµÃurlÁ´½Ó
+	 * è·å¾—urlé“¾æ¥
 	 *
 	 * @param key
 	 * @return
 	 */
 	public String getUrl(String key) {
-		// ÉèÖÃURL¹ıÆÚÊ±¼äÎª10Äê 3600l* 1000*24*365*10
+		// è®¾ç½®URLè¿‡æœŸæ—¶é—´ä¸º10å¹´ 3600l* 1000*24*365*10
 		Date expiration = new Date(System.currentTimeMillis() + 3600L * 1000 * 24 * 365 * 10);
-		// Éú³ÉURL
+		// ç”ŸæˆURL
 		URL url = cOSClient.generatePresignedUrl(bucketName, key, expiration);
 		if (url != null) {
 			return url.toString();
@@ -177,25 +177,25 @@ public class COSClientUtil {
 	}
 
 	/**
-	 * ÉÏ´«µ½COS·şÎñÆ÷ Èç¹ûÍ¬ÃûÎÄ¼ş»á¸²¸Ç·şÎñÆ÷ÉÏµÄ
+	 * ä¸Šä¼ åˆ°COSæœåŠ¡å™¨ å¦‚æœåŒåæ–‡ä»¶ä¼šè¦†ç›–æœåŠ¡å™¨ä¸Šçš„
 	 *
 	 * @param instream
-	 *            ÎÄ¼şÁ÷
+	 *            æ–‡ä»¶æµ
 	 * @param fileName
-	 *            ÎÄ¼şÃû³Æ °üÀ¨ºó×ºÃû
-	 * @return ³ö´í·µ»Ø"" ,Î¨Ò»MD5Êı×ÖÇ©Ãû
+	 *            æ–‡ä»¶åç§° åŒ…æ‹¬åç¼€å
+	 * @return å‡ºé”™è¿”å›"" ,å”¯ä¸€MD5æ•°å­—ç­¾å
 	 */
 	public String uploadFile2Cos(InputStream instream, String fileName) {
 		String ret = "";
 		try {
-			// ´´½¨ÉÏ´«ObjectµÄMetadata
+			// åˆ›å»ºä¸Šä¼ Objectçš„Metadata
 			ObjectMetadata objectMetadata = new ObjectMetadata();
 			objectMetadata.setContentLength(instream.available());
 			objectMetadata.setCacheControl("no-cache");
 			objectMetadata.setHeader("Pragma", "no-cache");
 			objectMetadata.setContentType(getcontentType(fileName.substring(fileName.lastIndexOf("."))));
 			objectMetadata.setContentDisposition("inline;filename=" + fileName);
-			// ÉÏ´«ÎÄ¼ş
+			// ä¸Šä¼ æ–‡ä»¶
 			PutObjectResult putResult = cOSClient.putObject(bucketName,  fileName, instream, objectMetadata);
 			ret = putResult.getETag();
 		} catch (IOException e) {
@@ -213,9 +213,9 @@ public class COSClientUtil {
 	}
 
 	/**
-	 * Description: ÅĞ¶ÏCos·şÎñÎÄ¼şÉÏ´«Ê±ÎÄ¼şµÄcontentType
+	 * Description: åˆ¤æ–­CosæœåŠ¡æ–‡ä»¶ä¸Šä¼ æ—¶æ–‡ä»¶çš„contentType
 	 *
-	 * @param filenameExtension ÎÄ¼şºó×º
+	 * @param filenameExtension æ–‡ä»¶åç¼€
 	 * @return String
 	 */
 	public static String getcontentType(String filenameExtension) {
@@ -252,9 +252,9 @@ public class COSClientUtil {
 	public String  downCosFile(String fullFileName){
 		 try {
 	            URL url = new URL(fullFileName);
-	            // ·µ»ØÒ»¸ö URLConnection ¶ÔÏó£¬Ëü±íÊ¾µ½ URL ËùÒıÓÃµÄÔ¶³Ì¶ÔÏóµÄÁ¬½Ó¡£
+	            // è¿”å›ä¸€ä¸ª URLConnection å¯¹è±¡ï¼Œå®ƒè¡¨ç¤ºåˆ° URL æ‰€å¼•ç”¨çš„è¿œç¨‹å¯¹è±¡çš„è¿æ¥ã€‚
 	            URLConnection uc = url.openConnection();
-	            // ´ò¿ªµÄÁ¬½Ó¶ÁÈ¡µÄÊäÈëÁ÷¡£
+	            // æ‰“å¼€çš„è¿æ¥è¯»å–çš„è¾“å…¥æµã€‚
 	            InputStream in = uc.getInputStream();
 	            StringBuilder sb = new StringBuilder();
 	            String line;

@@ -21,6 +21,19 @@
     <result column="downnum" property="downnum" jdbcType="INTEGER" />
     <result column="chapteroldid" property="chapteroldid" jdbcType="BIGINT" />
   </resultMap>
+
+  <resultMap id="SimpleResultMap" type="com.novel.common.pojo.TbNovel" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <id column="netid" property="netid" jdbcType="BIGINT" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="author" property="author" jdbcType="VARCHAR" />
+    <result column="tid" property="tid" jdbcType="BIGINT" />
+    <result column="imgpath" property="imgpath" jdbcType="VARCHAR" />
+    <result column="latestchaptername" property="latestchaptername" jdbcType="VARCHAR" />
+    <result column="latestchapterid" property="latestchapterid" jdbcType="BIGINT" />
+    <result column="updatetime" property="updatetime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >
@@ -84,6 +97,11 @@
     latestchapterid, addtime, updatetime, status, vaild, ishaschapter, clicknum, downnum, 
     chapteroldid
   </sql>
+
+  <sql id="Simple_Column_List" >
+    id, netid, title, author, tid,  imgpath, latestchaptername,
+    latestchapterid,  updatetime, status
+  </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.novel.common.pojo.TbNovelExample" >
     select
     <if test="distinct" >
@@ -113,6 +131,17 @@
     where id = #{id,jdbcType=BIGINT}
       and netid = #{netid,jdbcType=BIGINT}
   </select>
+
+  <select id="selectBookShelfUpdateInfo" resultMap="SimpleResultMap" parameterType="java.util.List" >
+    select
+    <include refid="Simple_Column_List" />
+    from tb_novel
+    where id in
+    <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="com.novel.common.pojo.TbNovelKey" >
     delete from tb_novel
     where id = #{id,jdbcType=BIGINT}

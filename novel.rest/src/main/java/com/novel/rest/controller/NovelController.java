@@ -1,11 +1,14 @@
 package com.novel.rest.controller;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.novel.common.mapper.TbNovelMapper;
+import com.novel.common.pojo.TbNovelExample;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,12 +56,29 @@ public class NovelController {
 
 	@Autowired
 	private TbNovelService tbNovelService;
+
+	@Autowired
+	private TbNovelMapper novelMapper;
+
 	@Autowired
 	private TbChapterService tbChapterService;
 
 	@Autowired
 	private SearchService searchService;
 
+	@ResponseBody
+	@RequestMapping("findUpdate")
+	public List<TbNovel> findUpdateNovleInfo(List<Long> list){
+		/*List<Long> list = new ArrayList<>();
+		list.add(123909L);
+		list.add(77550L);
+		list.add(58919L);
+		list.add(82546L);*/
+		/*TbNovelExample example = new TbNovelExample();
+		TbNovelExample.Criteria criteria = example.createCriteria();
+		criteria.andIdIn(list);*/
+		return  novelMapper.selectBookShelfUpdateInfo(list);
+	}
 	
 	/**
 	 *
@@ -70,7 +90,7 @@ public class NovelController {
 	 *            请求参数
 	 * @return
 	 */
-	@RequestMapping(value = "/list", method = RequestMethod.POST)
+	@RequestMapping(value = "/list")
 	@ApiOperation(httpMethod = "POST", value = "查询小说列表", notes = "根据小说名称或作者名关键字查询小说")
 
 	@ApiResponses({ @ApiResponse(code = 404, message = "连接异常"), @ApiResponse(code = 500, message = "接口异常"), })
